@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Star, Award, Users, Heart, MessageCircle, Mail,Gift } from 'lucide-react';
+import { ShoppingBag, Star, Gift, Truck, Smile } from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const Hero = () => {
   const [activeProduct, setActiveProduct] = useState(0);
   const products = [
     { name: "Golden Bowl", image: "/Images/Hero1.png", description: "Elegant ceremonial bowl crafted by skilled artisans. Perfect for festive gatherings and special occasions." },
     { name: "Diwali Lanterns", image: "/Images/Hero2.png", description: "Illuminate your home with these enchanting lanterns. Each piece is a work of art that casts a warm, inviting glow." },
-    { name: "Festive Treats", image:"/Images/Hero3.png" , description: "Indulge in a selection of traditional delicacies, handmade with the finest ingredients to tantalize your taste buds." },
+    { name: "Festive Treats", image: "/Images/Hero3.png", description: "Indulge in a selection of traditional delicacies, handmade with the finest ingredients to tantalize your taste buds." },
   ];
 
   const transitionProps = {
@@ -16,8 +20,56 @@ const Hero = () => {
     exit: { opacity: 0, y: -20 },
   };
 
+  const images = [
+    "/Images/caro1.png",
+    "/Images/caro2.png",
+    "/Images/caro3.png",
+    "/Images/caro4.png",
+    "/Images/caro5.png",
+    "/Images/caro6.png",
+    "/Images/caro7.png",
+    "/Images/caro8.png",
+    "/Images/caro9.png",
+    "/Images/caro10.png",
+    "/Images/caro11.png",
+    "/Images/caro12.png",
+    "/Images/caro13.png",
+    "/Images/caro14.png",
+    "/Images/caro15.png",
+  ];
+
+  const [swiper, setSwiper] = useState(null);
+
+  useEffect(() => {
+    const autoplayInterval = setInterval(() => {
+      if (swiper) {
+        swiper.slideNext();
+      }
+    }, 3000);
+
+    return () => clearInterval(autoplayInterval);
+  }, [swiper]);
+
+  const alternatingContent = [
+    {
+      image: "/Images/alt1.png",
+      title: "Exquisite Diwali Decor",
+      description: "Transform your home into a festive wonderland with our carefully curated collection of Diwali decorations. From intricate rangoli designs to sparkling string lights, we have everything you need to create a magical atmosphere that captures the essence of this joyous occasion."
+    },
+    {
+      image: "/Images/alt2.png",
+      title: "Artisanal Diya Collection",
+      description: "Illuminate your space with our handcrafted diyas, each telling a unique story of tradition and craftsmanship. These beautiful oil lamps are not just decorative pieces but also symbols of hope, prosperity, and the triumph of light over darkness."
+    },
+    {
+      image: "/Images/alt3.png",
+      title: "Gourmet Festive Treats",
+      description: "Indulge in the flavors of Diwali with our premium selection of sweets and savories. From traditional favorites like kaju katli and gulab jamun to modern fusion delicacies, our gourmet treats are perfect for gifting or savoring with your loved ones during the festivities."
+    },
+  ];
+
   return (
-    <div className="bg-gradient-to-br from-[#ffff] to-[#FBCFE8] min-h-screen py-20 px-4 sm:px-6 lg:px-8 pt-44">
+    <div className="bg-gradient-to-br from-[#ffff] to-[#FBCFE8] min-h-screen py-20 px-2 sm:px-4 lg:px-6 pt-48">
       <div className="max-w-7xl mx-auto">
         <motion.div
           {...transitionProps}
@@ -31,7 +83,7 @@ const Hero = () => {
             Celebrate with handcrafted essentials that bring the magic of India's festivities into your home.
           </p>
         </motion.div>
- 
+
         <div className="flex flex-col md:flex-row items-center">
           <motion.div  
             className="w-full md:w-1/2 mb-8 md:mb-0"
@@ -69,8 +121,8 @@ const Hero = () => {
             {products.map((product, index) => (
               <motion.div
                 key={index}
-                className={`mb-4 p-6 rounded-lg cursor-pointer transition-all ${
-                  activeProduct === index ? 'bg-[#f0d088] shadow-lg' : 'bg-white'
+                className={`mb-4 p-6 w-full md:w-[80%] rounded-lg cursor-pointer transition-all ${
+                  activeProduct === index ? 'bg-[#f0d088] shadow-lg' : 'bg-white shadow-md'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 onClick={() => setActiveProduct(index)}
@@ -97,49 +149,51 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center">About Us</h2>
+          <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center">Exclusive Diwali Bundles</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md flex items-center">
-              <Award className="mr-4 text-[#1e5b5e]" size={48} />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Award-Winning Craftsmanship</h3>
-                <p className="text-[#6c6c6c]">Our artisans are renowned for their exceptional skills and attention to detail.</p>
+            <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#e5d3ba] flex flex-col">
+              <img src="/Images/Bundle1.png" alt="Diwali Bundle 1" className="w-full h-64 object-cover rounded-lg mb-4" />
+              <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2">Delightful Diwali Bundle</h3>
+              <p className="text-[#6c6c6c] mb-4 flex-grow">Includes an assortment of lanterns, candles, and decorative items to create a warm and inviting ambiance.</p>
+              <div className="mt-auto">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300"
+                >
+                  <Gift className="mr-2 inline-block" size={20} /> Buy Now
+                </motion.button>
               </div>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-md flex items-center">
-              <Users className="mr-4 text-[#1e5b5e]" size={48} />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Empowering Communities</h3>
-                <p className="text-[#6c6c6c]">By supporting local artisans, we help preserve traditional crafts and provide sustainable livelihoods.</p>
+            <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#e5d3ba] flex flex-col">
+              <img src="/Images/Bundle2.png" alt="Diwali Bundle 2" className="w-full h-64 object-cover rounded-lg mb-4" />
+              <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2">Festive Feast Bundle</h3>
+              <p className="text-[#6c6c6c] mb-4 flex-grow">Treat your loved ones to a selection of traditional sweets, savories, and delicacies.</p>
+              <div className="mt-auto">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300"
+                >
+                  <Gift className="mr-2 inline-block" size={20} /> Buy Now
+                </motion.button>
               </div>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-md flex items-center">
-              <Heart className="mr-4 text-[#1e5b5e]" size={48} />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Elevating Celebrations</h3>
-                <p className="text-[#6c6c6c]">Our curated collection brings joy, beauty, and meaning to your festive moments.</p>
+            <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#e5d3ba] flex flex-col">
+              <img src="/Images/Bundle3.png" alt="Diwali Bundle 3" className="w-full h-64 object-cover rounded-lg mb-4" />
+              <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2">Prosperity Package</h3>
+              <p className="text-[#6c6c6c] mb-4 flex-grow">Elevate your celebrations with a curated selection of premium products and festive essentials.</p>
+              <div className="mt-auto">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300"
+                >
+                  <Gift className="mr-2 inline-block" size={20} /> Buy Now
+                </motion.button>
               </div>
             </div>
           </div>
-        </motion.div>
-
-        <motion.div
-          className="mt-24 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          <h2 className="text-3xl font-bold text-[#8b4513] mb-4 flex items-center justify-center">
-            <Gift className="mr-2" size={32} color="#8b4513" /> Special Diwali Offer
-          </h2>
-          <p className="text-2xl text-[#6c4a3d]">Up to 50% off on all home & living products</p>
-          <motion.div
-            className="inline-block mt-8 bg-white text-[#16464a] py-3 px-8 rounded-full font-semibold shadow-lg" 
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            Grab the Deal
-          </motion.div>
         </motion.div>
 
         <motion.div
@@ -148,55 +202,120 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center">Customer Testimonials</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <p className="text-[#6c6c6c] mb-4">"The Diwali lanterns from this store are simply stunning! They added such a warm and inviting ambiance to our home during the festival."</p>
-              <div className="flex items-center">
-                <img src="/Images/avatar1.png" alt="Avatar" className="w-12 h-12 rounded-full mr-4" />
-                <div>
-                  <p className="font-semibold">Priya Patel</p>
-                  <p className="text-[#6c6c6c] text-sm">Satisfied Customer</p>
-                </div>
+          <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center">Why Choose Us</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#e5d3ba] flex items-center">
+              <Truck className="mr-4 text-[#1e5b5e]" size={48} />
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Fast and Reliable Shipping</h3>
+                <p className="text-[#6c6c6c]">Get your festive essentials delivered right to your doorstep, in time for your celebrations.</p>
               </div>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <p className="text-[#6c6c6c] mb-4">"I gifted the festive treats to my family, and they absolutely loved them! The quality and taste were exceptional."</p>
-              <div className="flex items-center">
-                <img src="/Images/avatar2.png" alt="Avatar" className="w-12 h-12 rounded-full mr-4" />
-                <div>
-                  <p className="font-semibold">Rahul Sharma</p>
-                  <p className="text-[#6c6c6c] text-sm">Happy Customer</p>
-                </div>
+            <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#d4b5bf] flex items-center">
+              <Star className="mr-4 text-[#1e5b5e]" size={48} />
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Handpicked Products</h3>
+                <p className="text-[#6c6c6c]">We curate the finest selection of products to ensure the highest quality and craftsmanship.</p>
+              </div>
+            </div>
+            <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#c9a89a] flex items-center">
+              <Smile className="mr-4 text-[#1e5b5e]" size={48} />
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Exceptional Customer Service</h3>
+                <p className="text-[#6c6c6c]">Our dedicated team is always ready to assist you and ensure your utmost satisfaction.</p>
               </div>
             </div>
           </div>
         </motion.div>
 
         <motion.div
-          className="mt-24 bg-[#1e5b5e] text-white py-12 px-4 sm:px-6 lg:px-8 rounded-lg"
+          className="mt-24"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
         >
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">Subscribe to Our Newsletter</h2>
-            <p className="text-lg mb-8">Stay updated with our latest collections, exclusive offers, and festive inspiration.</p>
-            <form className="flex flex-col sm:flex-row">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-grow mb-4 sm:mb-0 sm:mr-4 px-4 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-[#16464a]"
-              />
-              <button
-                type="submit"
-                className="bg-white text-[#1e5b5e] py-3 px-8 rounded-full font-semibold hover:bg-[#f0d088] transition duration-300"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
+          <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center">Featured Products Gallery</h2>
+          <Swiper
+            onSwiper={setSwiper}
+            slidesPerView={4}
+            spaceBetween={10}
+            loop={true}
+            breakpoints={{
+              320: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+              },
+              640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              768: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+              },
+              1024: {
+                slidesPerView: 4,
+                spaceBetween: 40,
+              },
+            }}
+          >
+             {images.map((image, index) => (
+              <SwiperSlide key={index}>
+                <div className="bg-white p-4 w-full md:w-[90%] rounded-lg shadow-md">
+                  <img src={image} alt={`Slide ${index + 1}`} className="w-full h-72 object-cover rounded-lg mb-4" />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </motion.div>
+
+       {/* New Alternating Content Section */}
+<motion.div
+  className="mt-24"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, delay: 1.2 }}
+>
+  <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center">Discover Our Diwali Specials</h2>
+  {alternatingContent.map((content, index) => (
+    <motion.div
+      key={index}
+      className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center mb-24`}
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.2 * index }}
+    >
+      <motion.div
+        className="w-full md:w-1/2 mb-8 md:mb-0"
+        whileHover={{ scale: 1.05 }}
+        transition={{ duration: 0.3 }}
+      >
+        <img src={content.image} alt={content.title} className="w-full h-[400px] object-cover rounded-lg shadow-2xl" />
+      </motion.div>
+      <motion.div
+        className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pl-12' : 'md:pr-12'}`}
+        initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.4 + 0.2 * index }}
+      >
+        <motion.h3 
+          className="text-2xl font-bold text-[#8b4513] mb-4"
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.3 }}
+        >
+          {content.title}
+        </motion.h3>
+        <motion.p 
+          className="text-[#6c4a3d] text-lg leading-relaxed mb-6"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+        >
+          {content.description}
+        </motion.p>
+      </motion.div>
+    </motion.div>
+  ))}
+</motion.div>
       </div>
     </div>
   );
