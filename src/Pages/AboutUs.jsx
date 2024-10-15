@@ -44,7 +44,7 @@ const AboutUsSection = () => {
   };
 
   return (
-    <section className="bg-gradient-to-b from-pink-100 to-white-200 py-20 px-4 pt-44">
+    <section className="bg-gradient-to-b from-[#F5E6CF] to-[#F8F4E3] py-20 px-4 pt-44">
       <motion.div 
         className="max-w-6xl mx-auto"
         initial="hidden"

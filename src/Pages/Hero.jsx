@@ -4,6 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { ShoppingBag, Star, Gift, Truck, Smile, ChevronLeft, ChevronRight, Package, RefreshCw, ShieldCheck, CreditCard } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Marquee from 'react-fast-marquee';
+import { Link } from 'react-router-dom'; 
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -144,7 +145,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#ffff] to-[#FBCFE8] min-h-screen py-20 px-2 sm:px-4 lg:px-6 pt-44">
+    <div className="bg-gradient-to-br from-[#F5E6CF] to-[#EDBE7D] min-h-screen py-20 px-2 sm:px-4 lg:px-6 pt-44">
       <div className="max-w-7xl mx-auto">
         <AnimatedSection>
           <motion.div
@@ -208,14 +209,16 @@ const Hero = () => {
                 </motion.div>
               ))}
               <div className="mt-8 flex justify-center">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-[#1e5b5e] text-white py-3 px-8 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 flex items-center"
-                >
-                  <ShoppingBag className="mr-4" size={24} /> Shop Now
-                </motion.button>
-              </div>
+  <Link to="/products">
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className="bg-[#1e5b5e] text-white py-3 px-8 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 flex items-center"
+    >
+      <ShoppingBag className="mr-4" size={24} /> Shop Now
+    </motion.button>
+  </Link>
+</div>
             </motion.div>
           </div>
         </AnimatedSection>
@@ -240,57 +243,70 @@ const Hero = () => {
             </Marquee>
           </motion.div>
         </AnimatedSection>
-
         <AnimatedSection>
-          <motion.div className="mt-24">
-            <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center">Exclusive Diwali Bundles</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#e5d3ba] flex flex-col">
-                <img src="/Images/Bundle1.png" alt="Diwali Bundle 1" className="w-full h-64 object-cover rounded-lg mb-4" />
-                <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2">Delightful Diwali Bundle</h3>
-                <p className="text-[#6c6c6c] mb-4 flex-grow">Includes an assortment of lanterns, candles, and decorative items to create a warm and inviting ambiance.</p>
-                <div className="mt-auto">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300"
-                  >
-                    <Gift className="mr-2 inline-block" size={20} /> Buy Now
-                  </motion.button>
-                </div>
-              </div>
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#e5d3ba] flex flex-col">
-                <img src="/Images/Bundle2.png" alt="Diwali Bundle 2" className="w-full h-64 object-cover rounded-lg mb-4" />
-                <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2">Festive Feast Bundle</h3>
-                <p className="text-[#6c6c6c] mb-4 flex-grow">Treat your loved ones to a selection of traditional sweets, savories, and delicacies.</p>
-                <div className="mt-auto">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300"
-                  >
-                    <Gift className="mr-2 inline-block" size={20} /> Buy Now
-                  </motion.button>
-                </div>
-              </div>
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#e5d3ba] flex flex-col">
-                <img src="/Images/Bundle3.png" alt="Diwali Bundle 3" className="w-full h-64 object-cover rounded-lg mb-4" />
-
-                <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2">Prosperity Package</h3>
-                <p className="text-[#6c6c6c] mb-4 flex-grow">Elevate your celebrations with a curated selection of premium products and festive essentials.</p>
-                <div className="mt-auto">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300"
-                  >
-                    <Gift className="mr-2 inline-block" size={20} /> Buy Now
-                  </motion.button>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatedSection>
+  <motion.div className="mt-24">
+    <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center">Exclusive Diwali Bundles</h2>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#FFD6E3] flex flex-col">
+        <img src="/Images/Bundle1.png" alt="Diwali Bundle 1" className="w-full h-64 object-cover rounded-lg mb-4" />
+        <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2">Delightful Diwali Bundle</h3>
+        <p className="text-[#6c6c6c] mb-4 flex-grow">Includes an assortment of lanterns, candles, and decorative items to create a warm and inviting ambiance.</p>
+        <div className="mt-auto">
+        <motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300"
+>
+  <Link to="/products">
+    <div className="flex items-center">
+      <Gift className="mr-2 inline-block" size={20} />
+      Buy Now
+    </div>
+  </Link>
+</motion.button>
+        </div>
+      </div>
+      <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#FFD6E3] flex flex-col">
+        <img src="/Images/Bundle2.png" alt="Diwali Bundle 2" className="w-full h-64 object-cover rounded-lg mb-4" />
+        <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2">Festive Feast Bundle</h3>
+        <p className="text-[#6c6c6c] mb-4 flex-grow">Treat your loved ones to a selection of traditional sweets, savories, and delicacies.</p>
+        <div className="mt-auto">
+        <motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300"
+>
+  <Link to="/products">
+    <div className="flex items-center">
+      <Gift className="mr-2 inline-block" size={20} />
+      Buy Now
+    </div>
+  </Link>
+</motion.button>
+        </div>
+      </div>
+      <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#FFD6E3] flex flex-col">
+        <img src="/Images/Bundle3.png" alt="Diwali Bundle 3" className="w-full h-64 object-cover rounded-lg mb-4" />
+        <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2">Prosperity Package</h3>
+        <p className="text-[#6c6c6c] mb-4 flex-grow">Elevate your celebrations with a curated selection of premium products and festive essentials.</p>
+        <div className="mt-auto">
+        <motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300"
+>
+  <Link to="/products">
+    <div className="flex items-center">
+      <Gift className="mr-2 inline-block" size={20} />
+      Buy Now
+    </div>
+  </Link>
+</motion.button>
+        </div>
+      </div>
+    </div>
+  </motion.div>
+</AnimatedSection>
 
         <AnimatedSection>
           <motion.div className="mt-24">
