@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Star, Gift, Truck, Smile } from 'lucide-react';
+import { ShoppingBag, Star, Gift, Truck, Smile, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -67,6 +67,43 @@ const Hero = () => {
       description: "Indulge in the flavors of Diwali with our premium selection of sweets and savories. From traditional favorites like kaju katli and gulab jamun to modern fusion delicacies, our gourmet treats are perfect for gifting or savoring with your loved ones during the festivities."
     },
   ];
+
+  const testimonials = [
+    {
+      name: "Priya Sharma",
+      location: "Mumbai",
+      text: "The Diwali decor I ordered was absolutely stunning. It transformed our home and made our celebration extra special!",
+      image: "/Images/Person.png" // Replace with actual customer image
+    },
+    {
+      name: "Rahul Mehta",
+      location: "Delhi",
+      text: "Fast delivery and excellent quality products. The artisanal diyas were a hit at our family gathering. Will definitely order again!",
+      image: "/Images/Person.png" // Replace with actual customer image
+    },
+    {
+      name: "Anita Kapoor",
+      location: "Bangalore",
+      text: "The festive treats bundle was a delight! Authentic taste and beautiful packaging. It was the perfect gift for my relatives.",
+      image: "/Images/Person.png" // Replace with actual customer image
+    },
+    {
+      name: "Vikram Singh",
+      location: "Jaipur",
+      text: "Exceptional customer service! They helped me customize my order to perfection. The Prosperity Package exceeded my expectations.",
+      image: "/Images/Person.png" // Replace with actual customer image
+    }
+  ];
+
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  const nextTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prevTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
 
   return (
     <div className="bg-gradient-to-br from-[#ffff] to-[#FBCFE8] min-h-screen py-20 px-2 sm:px-4 lg:px-6 pt-48">
@@ -214,111 +251,158 @@ const Hero = () => {
             <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#d4b5bf] flex items-center">
               <Star className="mr-4 text-[#1e5b5e]" size={48} />
               <div>
-                <h3 className="text-xl font-semibold mb-2">Handpicked Products</h3>
-                <p className="text-[#6c6c6c]">We curate the finest selection of products to ensure the highest quality and craftsmanship.</p>
-              </div>
-            </div>
-            <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#c9a89a] flex items-center">
-              <Smile className="mr-4 text-[#1e5b5e]" size={48} />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Exceptional Customer Service</h3>
-                <p className="text-[#6c6c6c]">Our dedicated team is always ready to assist you and ensure your utmost satisfaction.</p>
-              </div>
+
+              <h3 className="text-xl font-semibold mb-2">Handpicked Products</h3>
+              <p className="text-[#6c6c6c]">We curate the finest selection of products to ensure the highest quality and craftsmanship.</p>
             </div>
           </div>
-        </motion.div>
+          <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#c9a89a] flex items-center">
+            <Smile className="mr-4 text-[#1e5b5e]" size={48} />
+            <div>
+              <h3 className="text-xl font-semibold mb-2">Exceptional Customer Service</h3>
+              <p className="text-[#6c6c6c]">Our dedicated team is always ready to assist you and ensure your utmost satisfaction.</p>
+            </div>
+          </div>
+        </div>
+      </motion.div>
 
-        <motion.div
-          className="mt-24"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
+      <motion.div
+        className="mt-24"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1 }}
+      >
+        <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center">Featured Products Gallery</h2>
+        <Swiper
+          onSwiper={setSwiper}
+          slidesPerView={4}
+          spaceBetween={10}
+          loop={true}
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+              spaceBetween: 10,
+            },
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 30,
+            },
+            1024: {
+              slidesPerView: 4,
+              spaceBetween: 40,
+            },
+          }}
         >
-          <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center">Featured Products Gallery</h2>
-          <Swiper
-            onSwiper={setSwiper}
-            slidesPerView={4}
-            spaceBetween={10}
-            loop={true}
-            breakpoints={{
-              320: {
-                slidesPerView: 1,
-                spaceBetween: 10,
-              },
-              640: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-              },
-              1024: {
-                slidesPerView: 4,
-                spaceBetween: 40,
-              },
-            }}
-          >
-             {images.map((image, index) => (
-              <SwiperSlide key={index}>
-                <div className="bg-white p-4 w-full md:w-[90%] rounded-lg shadow-md">
-                  <img src={image} alt={`Slide ${index + 1}`} className="w-full h-72 object-cover rounded-lg mb-4" />
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </motion.div>
+           {images.map((image, index) => (
+            <SwiperSlide key={index}>
+              <div className="bg-white p-4 w-full md:w-[90%] rounded-lg shadow-md">
+                <img src={image} alt={`Slide ${index + 1}`} className="w-full h-72 object-cover rounded-lg mb-4" />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </motion.div>
 
-       {/* New Alternating Content Section */}
+      {/* Alternating Content Section */}
+      <motion.div
+        className="mt-24"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1.2 }}
+      >
+        <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center">Discover Our Diwali Specials</h2>
+        {alternatingContent.map((content, index) => (
+          <motion.div
+            key={index}
+            className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center mb-24`}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 * index }}
+          >
+            <motion.div
+              className="w-full md:w-1/2 mb-8 md:mb-0"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            >
+              <img src={content.image} alt={content.title} className="w-full h-[400px] object-cover rounded-lg shadow-2xl" />
+            </motion.div>
+            <motion.div
+              className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pl-12' : 'md:pr-12'}`}
+              initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 + 0.2 * index }}
+            >
+              <motion.h3 
+                className="text-2xl font-bold text-[#8b4513] mb-4"
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.3 }}
+              >
+                {content.title}
+              </motion.h3>
+              <motion.p 
+                className="text-[#6c4a3d] text-lg leading-relaxed mb-6"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                {content.description}
+              </motion.p>
+            </motion.div>
+          </motion.div>
+        ))}
+      </motion.div>
+{/* Customer Testimonials Section */}
 <motion.div
   className="mt-24"
   initial={{ opacity: 0, y: 20 }}
   animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8, delay: 1.2 }}
+  transition={{ duration: 0.8, delay: 1.4 }}
 >
-  <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center">Discover Our Diwali Specials</h2>
-  {alternatingContent.map((content, index) => (
-    <motion.div
-      key={index}
-      className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center mb-24`}
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.2 * index }}
-    >
+  <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center">What Our Customers Say</h2>
+  <div className="relative bg-gradient-to-r from-[#f0d088] to-[#e5d3ba] p-12 rounded-lg shadow-xl">
+    <AnimatePresence mode="wait">
       <motion.div
-        className="w-full md:w-1/2 mb-8 md:mb-0"
-        whileHover={{ scale: 1.05 }}
-        transition={{ duration: 0.3 }}
-      >
-        <img src={content.image} alt={content.title} className="w-full h-[400px] object-cover rounded-lg shadow-2xl" />
-      </motion.div>
-      <motion.div
-        className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pl-12' : 'md:pr-12'}`}
-        initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+        key={currentTestimonial}
+        initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.4 + 0.2 * index }}
+        exit={{ opacity: 0, x: -50 }}
+        transition={{ duration: 0.5 }}
+        className="flex items-center pl-16"
       >
-        <motion.h3 
-          className="text-2xl font-bold text-[#8b4513] mb-4"
-          whileHover={{ scale: 1.1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {content.title}
-        </motion.h3>
-        <motion.p 
-          className="text-[#6c4a3d] text-lg leading-relaxed mb-6"
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.3 }}
-        >
-          {content.description}
-        </motion.p>
+        <img 
+          src={testimonials[currentTestimonial].image} 
+          alt={testimonials[currentTestimonial].name}
+          className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md mr-8"
+        />
+        <div>
+          <p className="text-[#4a4a4a] text-lg italic mb-4">"{testimonials[currentTestimonial].text}"</p>
+          <p className="font-semibold text-[#1e5b5e]">{testimonials[currentTestimonial].name}</p>
+          <p className="text-[#6c4a3d]">{testimonials[currentTestimonial].location}</p>
+        </div>
       </motion.div>
-    </motion.div>
-  ))}
+    </AnimatePresence>
+    <button 
+      onClick={prevTestimonial} 
+      className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-[#f0d088] transition-colors duration-300"
+      aria-label="Previous testimonial"
+    >
+      <ChevronLeft size={24} className="text-[#1e5b5e]" />
+    </button>
+    <button 
+      onClick={nextTestimonial}
+      className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-[#f0d088] transition-colors duration-300"
+      aria-label="Next testimonial"
+    >
+      <ChevronRight size={24} className="text-[#1e5b5e]" />
+    </button>
+  </div>
 </motion.div>
-      </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default Hero;

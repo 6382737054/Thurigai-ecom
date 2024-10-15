@@ -12,13 +12,19 @@ const NavBar = () => {
   const menuItems = ['Home', 'About Us', 'Products', 'Gifting', 'Why Us'];
 
   return (
-    <header className="bg-wheat-light shadow-sm fixed top-0 left-0 w-full z-50">
+    <header className="bg-[#ffe5a2] shadow-sm fixed top-0 left-0 w-full z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col">
           {/* Top bar */}
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <Link to="/" className="text-2xl font-bold text-gray-800">Your Logo</Link>
+              <Link to="/" className="flex items-center">
+                <img 
+                  src="/Images/FooterLogo.png" 
+                  alt="Your Logo" 
+                  className="h-10 w-auto"
+                />
+              </Link>
             </div>
             <div className="hidden md:flex items-center space-x-4">
               <div className="relative">
@@ -29,19 +35,19 @@ const NavBar = () => {
                 />
                 <MagnifyingGlassIcon className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               </div>
-              <button className="text-gray-600 hover:text-gray-800">
+              <button className="text-black hover:underline">
                 <HeartIcon className="w-6 h-6" />
               </button>
-              <button className="text-gray-600 hover:text-gray-800">
+              <button className="text-black hover:underline">
                 <UserIcon className="w-6 h-6" />
               </button>
-              <button className="text-gray-600 hover:text-gray-800">
+              <button className="text-black hover:underline">
                 <ShoppingBagIcon className="w-6 h-6" />
               </button>
             </div>
             <button
               onClick={toggleMenu}
-              className="md:hidden text-gray-600 hover:text-gray-800 focus:outline-none"
+              className="md:hidden text-black hover:underline focus:outline-none"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 {isOpen ? (
@@ -59,7 +65,7 @@ const NavBar = () => {
               <Link
                 key={item}
                 to={`/${item.toLowerCase().replace(/\s+/g, '-')}`}
-                className="text-gray-700 hover:text-wheat-dark transition-colors duration-300"
+                className="text-black hover:underline transition-colors duration-300"
               >
                 {item}
               </Link>
@@ -82,20 +88,20 @@ const NavBar = () => {
             <Link
               key={item}
               to={`/${item.toLowerCase().replace(/\s+/g, '-')}`}
-              className="block px-4 py-2 text-gray-700 hover:bg-wheat-dark hover:text-white"
+              className="block px-4 py-2 text-black hover:underline"
               onClick={toggleMenu}
             >
               {item}
             </Link>
           ))}
           <div className="flex justify-around py-4 border-t border-wheat-dark">
-            <button className="text-gray-600 hover:text-gray-800">
+            <button className="text-black hover:underline">
               <HeartIcon className="w-6 h-6" />
             </button>
-            <button className="text-gray-600 hover:text-gray-800">
+            <button className="text-black hover:underline">
               <UserIcon className="w-6 h-6" />
             </button>
-            <button className="text-gray-600 hover:text-gray-800">
+            <button className="text-black hover:underline">
               <ShoppingBagIcon className="w-6 h-6" />
             </button>
           </div>

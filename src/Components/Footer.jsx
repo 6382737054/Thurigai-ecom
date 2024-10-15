@@ -26,16 +26,21 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-r from-[#1e5b5e] to-[#16464a] text-white py-16">
+    <footer className="bg-[#111828] text-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand and Description */}
+          {/* Brand, Logo, and Description */}
           <motion.div 
-            className="col-span-1 lg:col-span-1"
+            className="col-span-1 lg:col-span-1 flex flex-col items-start"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
+            <img 
+              src="/Images/FooterLogo.png" 
+              alt="Diwali Home Fest Logo" 
+              className="mb-4 w-32 h-auto"
+            />
             <h2 className="text-3xl font-bold mb-4">Diwali Home Fest</h2>
             <p className="text-gray-300 mb-6">
               Celebrating the festival of lights with exquisite decor and delightful treats.
