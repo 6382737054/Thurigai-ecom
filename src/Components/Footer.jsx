@@ -37,7 +37,7 @@ const Footer = () => {
             transition={{ duration: 0.5 }}
           >
             <img 
-              src="/Images/FooterLogo.png" 
+              src="/Images/Logo.png" 
               alt="Diwali Home Fest Logo" 
               className="mb-4 w-24 sm:w-32 h-auto"
             />
