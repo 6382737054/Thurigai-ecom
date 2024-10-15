@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { ShoppingBagIcon, UserIcon, HeartIcon, MagnifyingGlassIcon, Bars3Icon } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   const menuItems = ['Home', 'Products', 'About Us', 'Gifting', 'Why Us'];
+
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
 
   return (
     <header className="bg-white shadow-sm fixed top-0 left-0 w-full z-50">
@@ -60,7 +65,13 @@ const NavBar = () => {
               <Link 
                 key={item}
                 to={item === 'Products' ? '/products' : item === 'Home' ? '/' : `/${item.toLowerCase().replace(/\s+/g, '-')}`}
-                className="text-brown-700 hover:text-brown-900 hover:underline text-sm"
+                className={`text-sm hover:text-brown-900 hover:underline ${
+                  isActive(
+                    item === 'Products' ? '/products' : item === 'Home' ? '/' : `/${item.toLowerCase().replace(/\s+/g, '-')}`
+                  )
+                    ? 'text-brown-900 font-bold'
+                    : 'text-brown-700'
+                }`}
               >
                 {item}
               </Link>
@@ -76,7 +87,13 @@ const NavBar = () => {
             <Link 
               key={item}
               to={item === 'Products' ? '/products' : item === 'Home' ? '/' : `/${item.toLowerCase().replace(/\s+/g, '-')}`}
-              className="block px-4 py-2 text-brown-700 hover:text-brown-900 hover:underline text-sm"
+              className={`block px-4 py-2 text-sm hover:text-brown-900 hover:underline ${
+                isActive(
+                  item === 'Products' ? '/products' : item === 'Home' ? '/' : `/${item.toLowerCase().replace(/\s+/g, '-')}`
+                )
+                  ? 'text-brown-900 font-bold'
+                  : 'text-brown-700'
+              }`}
               onClick={toggleMenu}
             >
               {item}

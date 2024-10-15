@@ -19,11 +19,13 @@ const mockProducts = [
 const ProductCard = ({ product, onAddToCart, onToggleWishlist, viewMode }) => {
   return (
     <motion.div 
-      className={`bg-white rounded-lg shadow-md overflow-hidden relative ${viewMode === 'grid' ? 'flex flex-col' : 'flex'}`}
+      className={`bg-white rounded-lg shadow-md overflow-hidden relative ${
+        viewMode === 'grid' ? 'flex flex-col' : 'flex items-center'
+      }`}
       whileHover={{ scale: 1.02, boxShadow: '0 10px 20px rgba(0,0,0,0.1)' }}
       transition={{ duration: 0.3 }}
     >
-      <div className={`relative ${viewMode === 'grid' ? 'w-full h-64' : 'w-1/4 min-w-[150px]'}`}>
+      <div className={`relative ${viewMode === 'grid' ? 'w-full h-64' : 'w-1/5 min-w-[120px] h-40'}`}>
         <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
         <button
           className="absolute top-2 right-2 bg-white rounded-full p-2 shadow-md hover:bg-gray-100"
@@ -32,8 +34,8 @@ const ProductCard = ({ product, onAddToCart, onToggleWishlist, viewMode }) => {
           <Heart className={`h-5 w-5 ${product.isWishlisted ? 'text-red-500 fill-red-500' : 'text-gray-400'}`} />
         </button>
       </div>
-      <div className={`p-4 flex flex-col justify-between ${viewMode === 'grid' ? '' : 'flex-1'}`}>
-        <div>
+      <div className={`p-4 flex flex-col justify-between ${viewMode === 'grid' ? '' : 'flex-1 flex flex-row'}`}>
+        <div className={viewMode === 'grid' ? '' : 'flex-1 pr-4'}>
           <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2">{product.name}</h3>
           <div className="flex items-center mb-2">
             <div className="flex">
@@ -43,14 +45,15 @@ const ProductCard = ({ product, onAddToCart, onToggleWishlist, viewMode }) => {
             </div>
             <span className="ml-2 text-sm text-gray-600">({product.reviews})</span>
           </div>
-          <p className="text-gray-600 mb-2 line-clamp-2">{product.description}</p>
+          <p className={`text-gray-600 mb-2 ${viewMode === 'grid' ? 'line-clamp-2' : 'line-clamp-3'}`}>{product.description}</p>
         </div>
-        <div className={`flex ${viewMode === 'grid' ? 'flex-col space-y-2' : 'justify-between items-center'} mt-2`}>
-          <span className="text-xl font-bold text-gray-800">₹{product.price.toFixed(2)}</span>
+        <div className={`flex ${viewMode === 'grid' ? 'flex-col space-y-2' : 'flex-col justify-center items-end'}`}>
+          <span className="text-xl font-bold text-gray-800 mb-2">₹{product.price.toFixed(2)}</span>
           <button
-            className="bg-blue-600 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-blue-700 transition duration-300"
+            className="bg-blue-600 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-blue-700 transition duration-300 flex items-center"
             onClick={() => onAddToCart(product.id)}
           >
+            <ShoppingCart className="mr-2 h-4 w-4" />
             Add to Cart
           </button>
         </div>
