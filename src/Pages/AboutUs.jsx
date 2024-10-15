@@ -44,7 +44,7 @@ const AboutUsSection = () => {
   };
 
   return (
-    <section className="bg-gradient-to-b from-pink-100 to-purple-100 py-20 px-4 pt-44">
+    <section className="bg-gradient-to-b from-pink-100 to-white-200 py-20 px-4 pt-44">
       <motion.div 
         className="max-w-6xl mx-auto"
         initial="hidden"
@@ -54,7 +54,7 @@ const AboutUsSection = () => {
         }}
       >
         <motion.h1 
-          className="text-5xl font-bold text-center mb-8 text-purple-800"
+          className="text-5xl font-bold text-center mb-8 text-brown-800"
           variants={fadeInUp}
         >
           About Our Extraordinary Brand
@@ -96,7 +96,7 @@ const AboutUsSection = () => {
         </div>
         
         <motion.div variants={fadeInUp} className="mb-12">
-          <h2 className="text-3xl font-semibold mb-6 text-center text-purple-800">Our Values</h2>
+          <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800">Our Values</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { title: "Customer First", icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" },
@@ -116,7 +116,7 @@ const AboutUsSection = () => {
         </motion.div>
         
         <motion.div variants={fadeInUp} className="mb-12">
-          <h2 className="text-3xl font-semibold mb-6 text-center text-purple-800">Our Achievements</h2>
+          <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800">Our Achievements</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             {[
               { title: "Happy Customers", count: 100000 },
@@ -135,7 +135,7 @@ const AboutUsSection = () => {
         </motion.div>
         
         <motion.div variants={fadeInUp}>
-          <h2 className="text-3xl font-semibold mb-6 text-center text-purple-800">Meet Our Team</h2>
+          <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800">Meet Our Team</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { name: "Jane Doe", role: "Founder & CEO", bio: "Visionary leader with 15+ years in the industry.", image: "/Images/Person.png" },
@@ -157,7 +157,7 @@ const AboutUsSection = () => {
         </motion.div>
 
         <motion.div variants={fadeInUp} className="mt-12">
-          <h2 className="text-3xl font-semibold mb-6 text-center text-purple-800">Our Commitment to You</h2>
+          <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800">Our Commitment to You</h2>
           <Card className="text-center">
             <p className="text-gray-700 mb-4">
               At [Your Brand Name], we're more than just a company – we're a community dedicated to enhancing your lifestyle. 
