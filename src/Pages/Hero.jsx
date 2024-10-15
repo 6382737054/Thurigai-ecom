@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Star, Gift, Truck, Smile, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ShoppingBag, Star, Gift, Truck, Smile, ChevronLeft, ChevronRight, Package, RefreshCw, ShieldCheck, CreditCard } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
 const Hero = () => {
   const [activeProduct, setActiveProduct] = useState(0);
+  
   const products = [
     { name: "Golden Bowl", image: "/Images/Hero1.png", description: "Elegant ceremonial bowl crafted by skilled artisans. Perfect for festive gatherings and special occasions." },
     { name: "Diwali Lanterns", image: "/Images/Hero2.png", description: "Illuminate your home with these enchanting lanterns. Each piece is a work of art that casts a warm, inviting glow." },
@@ -85,12 +86,6 @@ const Hero = () => {
       name: "Anita Kapoor",
       location: "Bangalore",
       text: "The festive treats bundle was a delight! Authentic taste and beautiful packaging. It was the perfect gift for my relatives.",
-      image: "/Images/Person.png" // Replace with actual customer image
-    },
-    {
-      name: "Vikram Singh",
-      location: "Jaipur",
-      text: "Exceptional customer service! They helped me customize my order to perfection. The Prosperity Package exceeded my expectations.",
       image: "/Images/Person.png" // Replace with actual customer image
     }
   ];
@@ -362,47 +357,90 @@ const Hero = () => {
   transition={{ duration: 0.8, delay: 1.4 }}
 >
   <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center">What Our Customers Say</h2>
-  <div className="relative bg-gradient-to-r from-[#f0d088] to-[#e5d3ba] p-12 rounded-lg shadow-xl">
+  <div className="relative">
     <AnimatePresence mode="wait">
       <motion.div
         key={currentTestimonial}
+        className="bg-white rounded-lg shadow-xl p-6 flex flex-col items-center max-w-2xl mx-auto"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -50 }}
         transition={{ duration: 0.5 }}
-        className="flex items-center pl-16"
       >
-        <img 
-          src={testimonials[currentTestimonial].image} 
+        <img
+          src={testimonials[currentTestimonial].image}
           alt={testimonials[currentTestimonial].name}
-          className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md mr-8"
+          className="w-20 h-20 rounded-full object-cover border-4 border-[#f0d088] shadow-md mb-4"
         />
-        <div>
-          <p className="text-[#4a4a4a] text-lg italic mb-4">"{testimonials[currentTestimonial].text}"</p>
-          <p className="font-semibold text-[#1e5b5e]">{testimonials[currentTestimonial].name}</p>
-          <p className="text-[#6c4a3d]">{testimonials[currentTestimonial].location}</p>
+        <p className="text-[#4a4a4a] text-lg italic mb-4 text-center">"{testimonials[currentTestimonial].text}"</p>
+        <div className="mt-auto">
+          <p className="font-semibold text-[#1e5b5e] text-center">{testimonials[currentTestimonial].name}</p>
+          <p className="text-[#6c4a3d] text-sm text-center">{testimonials[currentTestimonial].location}</p>
         </div>
       </motion.div>
     </AnimatePresence>
-    <button 
-      onClick={prevTestimonial} 
-      className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-[#f0d088] transition-colors duration-300"
-      aria-label="Previous testimonial"
-    >
-      <ChevronLeft size={24} className="text-[#1e5b5e]" />
-    </button>
-    <button 
-      onClick={nextTestimonial}
-      className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-[#f0d088] transition-colors duration-300"
-      aria-label="Next testimonial"
-    >
-      <ChevronRight size={24} className="text-[#1e5b5e]" />
-    </button>
+    
+    {/* Dot Navigator */}
+    <div className="flex justify-center mt-8">
+      {testimonials.map((_, index) => (
+        <button
+          key={index}
+          onClick={() => setCurrentTestimonial(index)}
+          className={`w-3 h-3 rounded-full mx-1 focus:outline-none transition-colors duration-300 ${
+            currentTestimonial === index ? 'bg-[#8b4513]' : 'bg-[#e5d3ba]'
+          }`}
+          aria-label={`View testimonial ${index + 1}`}
+        />
+      ))}
+    </div>
+  </div>
+</motion.div>
+
+{/* Key Features Section */}
+<motion.div
+  className="mt-24"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, delay: 1.6 }}
+>
+  <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center">Key Features</h2>
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div className="flex flex-col items-center text-center">
+      <div className="bg-[#f0d088] rounded-full p-4 mb-4">
+        <Package className="h-10 w-10 text-[#b8860b]" />
+      </div>
+      <h3 className="text-xl font-semibold text-[#8b4513] mb-2">Free delivery across India</h3>
+      <p className="text-[#6c4a3d]">Enjoy free delivery on orders over ₹999 within India and $59 internationally. We guarantee fast delivery.</p>
+    </div>
+    <div className="flex flex-col items-center text-center">
+      <div className="bg-[#f0d088] rounded-full p-4 mb-4">
+        <RefreshCw className="h-10 w-10 text-[#b8860b]" />
+      </div>
+      <h3 className="text-xl font-semibold text-[#8b4513] mb-2">Easy replacement</h3>
+      <p className="text-[#6c4a3d]">If you receive a damaged product, we'll gladly take it back! Enjoy a hassle-free shopping experience.</p>
+    </div>
+    <div className="flex flex-col items-center text-center">
+      <div className="bg-[#f0d088] rounded-full p-4 mb-4">
+        <ShieldCheck className="h-10 w-10 text-[#b8860b]" />
+      </div>
+      <h3 className="text-xl font-semibold text-[#8b4513] mb-2">100% Authentic</h3>
+      <p className="text-[#6c4a3d]">Shop with peace of mind knowing that all our products are 100% authentic.</p>
+    </div>
+    <div className="flex flex-col items-center text-center">
+      <div className="bg-[#f0d088] rounded-full p-4 mb-4">
+        <CreditCard className="h-10 w-10 text-[#b8860b]" />
+      </div>
+      <h3 className="text-xl font-semibold text-[#8b4513] mb-2">Secure payments</h3>
+      <p className="text-[#6c4a3d]">Our website offers a 100% secure payment gateway, ensuring a completely safe shopping experience for you.</p>
+    </div>
   </div>
 </motion.div>
     </div>
   </div>
+  
 );
 };
+
+
 
 export default Hero;
