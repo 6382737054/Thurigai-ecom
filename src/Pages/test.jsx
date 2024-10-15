@@ -71,6 +71,7 @@ const ProductCard = ({ product, onAddToCart, onToggleWishlist, viewMode }) => {
   );
 };
 
+
 const ProductsSection = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -235,7 +236,6 @@ const ProductsSection = () => {
         )}
 
 
-
         {filteredProducts.length > productsPerPage && (
           <motion.div
             className="mt-12 flex justify-center items-center"
@@ -251,6 +251,7 @@ const ProductsSection = () => {
               <ChevronLeft className="h-6 w-6" />
             </button>
             {[...Array(Math.ceil(filteredProducts.length / productsPerPage))]
+              .slice(0, Math.ceil(filteredProducts.length / productsPerPage))
               .map((_, index) => (
                 <button
                   key={index}
