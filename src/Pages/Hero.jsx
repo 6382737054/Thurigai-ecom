@@ -2,12 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Star, Gift, Truck, Smile, ChevronLeft, ChevronRight, Package, RefreshCw, ShieldCheck, CreditCard } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import Marquee from 'react-fast-marquee';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 const Hero = () => {
   const [activeProduct, setActiveProduct] = useState(0);
+
+  const marqueeItems = [
+    { type: 'image', content: '/Images/marq1.png', alt: 'Diwali Lamp' },
+    { type: 'text', content: 'Exclusive Diwali Offers' },
+    { type: 'image', content: '/Images/marq2.png', alt: 'Rangoli Design' },
+    { type: 'text', content: 'Handcrafted with Love' },
+    { type: 'image', content: '/Images/marq3.png', alt: 'Festive Sweets' },
+    { type: 'text', content: 'Authentic Indian Flavors' },
+    { type: 'image', content: '/Images/marq4.png', alt: 'Diwali Decorations' },
+    { type: 'text', content: 'Transform Your Space' },
+  ];
   
   const products = [
     { name: "Golden Bowl", image: "/Images/Hero1.png", description: "Elegant ceremonial bowl crafted by skilled artisans. Perfect for festive gatherings and special occasions." },
@@ -174,6 +186,30 @@ const Hero = () => {
             </div>
           </motion.div>
         </div>
+ {/* Impressive Marquee Section */}
+ <motion.div
+          className="mt-24"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+        >
+          <Marquee
+            gradient={false}
+            speed={50}
+            pauseOnHover={true}
+            className="bg-gradient-to-r from-[#f0d088] to-[#e5d3ba] py-8 rounded-lg shadow-xl"
+          >
+            {marqueeItems.map((item, index) => (
+              <div key={index} className="mx-8 flex items-center">
+                {item.type === 'image' ? (
+                  <img src={item.content} alt={item.alt} className="h-24 w-24 object-cover rounded-full border-4 border-white shadow-md" />
+                ) : (
+                  <h3 className="text-2xl font-bold text-[#8b4513]">{item.content}</h3>
+                )}
+              </div>
+            ))}
+          </Marquee>
+        </motion.div>
 
         <motion.div
           className="mt-24"
