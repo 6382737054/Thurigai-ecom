@@ -59,7 +59,7 @@ const NavBar = () => {
             {menuItems.map((item) => (
               <Link 
                 key={item}
-                to={`/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                to={item === 'Products' ? '/products' : item === 'Home' ? '/' : `/${item.toLowerCase().replace(/\s+/g, '-')}`}
                 className="text-brown-700 hover:text-brown-900 hover:underline text-sm"
               >
                 {item}
@@ -75,7 +75,7 @@ const NavBar = () => {
           {menuItems.map((item) => (
             <Link 
               key={item}
-              to={`/${item.toLowerCase().replace(/\s+/g, '-')}`}
+              to={item === 'Products' ? '/products' : item === 'Home' ? '/' : `/${item.toLowerCase().replace(/\s+/g, '-')}`}
               className="block px-4 py-2 text-brown-700 hover:text-brown-900 hover:underline text-sm"
               onClick={toggleMenu}
             >
