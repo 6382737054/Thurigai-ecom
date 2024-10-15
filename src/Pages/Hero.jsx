@@ -113,7 +113,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#ffff] to-[#FBCFE8] min-h-screen py-20 px-2 sm:px-4 lg:px-6 pt-48">
+    <div className="bg-gradient-to-br from-[#ffff] to-[#FBCFE8] min-h-screen py-20 px-2 sm:px-4 lg:px-6 pt-28">
       <div className="max-w-7xl mx-auto">
         <motion.div
           {...transitionProps}
