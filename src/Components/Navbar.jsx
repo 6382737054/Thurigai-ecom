@@ -46,10 +46,12 @@ const NavBar = () => {
             <button className="text-brown-500 hover:text-brown-700 ml-4 hover:underline">
               <UserIcon className="w-6 h-6" />
             </button>
-            <button className="text-brown-500 hover:text-brown-700 relative ml-4 hover:underline">
-              <ShoppingBagIcon className="w-6 h-6" />
-              <span className="absolute -top-1 -right-1 text-xs bg-brown-500 text-white rounded-full px-1.5 py-0.5">0</span>
-            </button>
+            <Link 
+        to="/cart" 
+        className="text-brown-500 hover:text-brown-700 relative ml-4 hover:underline"
+      >
+        <ShoppingBagIcon className="w-6 h-6" />
+      </Link>
           </div>
           <button className="md:hidden text-brown-500 hover:text-brown-700" onClick={toggleMenu}>
             <Bars3Icon className="w-6 h-6" />
@@ -106,10 +108,12 @@ const NavBar = () => {
             <button className="text-brown-500 hover:text-brown-700 ml-4 hover:underline">
               <UserIcon className="w-6 h-6" />
             </button>
-            <button className="text-brown-500 hover:text-brown-700 relative ml-4 hover:underline">
-              <ShoppingBagIcon className="w-6 h-6" />
-              <span className="absolute -top-1 -right-1 text-xs bg-brown-500 text-white rounded-full px-1.5 py-0.5">0</span>
-            </button>
+            <Link 
+        to="/cart" 
+        className="text-brown-500 hover:text-brown-700 relative ml-4 hover:underline"
+      >
+        <ShoppingBagIcon className="w-6 h-6" />
+      </Link>
           </div>
         </nav>
       )}

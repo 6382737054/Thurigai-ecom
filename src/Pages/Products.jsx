@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, Heart, Star, Search, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const mockProducts = [
   { id: 1, name: "Ornate Diya Set", category: "Decor", price: 599, rating: 4.5, reviews: 120, image: "/Images/product1.png", description: "Beautifully crafted diya set for festive illumination." },
@@ -16,11 +17,15 @@ const mockProducts = [
   { id: 11, name: "Festive Home Decor Set", category: "Decor", price: 1299, rating: 4.7, reviews: 180, image: "/Images/product1.png", description: "Complete set to decorate your home for Diwali." },
   { id: 12, name: "Designer Diyas (Set of 6)", category: "Decor", price: 449, rating: 4.4, reviews: 140, image: "/Images/product1.png", description: "Artistically crafted diyas to elevate your decor." },
   { id: 13, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4.8, reviews: 250, image: "/Images/product1.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
+  { id: 14, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4.8, reviews: 250, image: "/Images/product1.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
+  { id: 15, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4, reviews: 250, image: "/Images/product1.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
+  { id: 16, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4.8, reviews: 250, image: "/Images/product1.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
+  { id: 17, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4.8, reviews: 250, image: "/Images/product1.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
 ];
 
 const ProductCard = ({ product, onAddToCart, onToggleWishlist }) => {
   return (
-    <motion.div 
+<motion.div 
       className="bg-white rounded-xl shadow-lg overflow-hidden relative flex flex-col transition-all duration-300 hover:shadow-xl"
       whileHover={{ y: -5 }}
     >
@@ -50,14 +55,14 @@ const ProductCard = ({ product, onAddToCart, onToggleWishlist }) => {
         </div>
         <div className="flex flex-col space-y-2">
           <span className="text-xl font-bold text-gray-800">₹{product.price.toFixed(2)}</span>
-          <button
-            className="bg-blue-600 text-white py-2 px-4 rounded-full text-sm font-medium hover:bg-blue-700 transition duration-300 flex items-center justify-center"
-            onClick={() => onAddToCart(product.id)}
-          >
-            <ShoppingCart className="mr-2 h-4 w-4" />
-            Add to Cart
-          </button>
-        </div>
+    <button
+      className="bg-blue-600 text-white py-2 px-4 rounded-full text-sm font-medium hover:bg-blue-700 transition duration-300 flex items-center justify-center"
+      onClick={() => onAddToCart(product)}
+    >
+      <ShoppingCart className="mr-2 h-4 w-4" />
+      Add to Cart
+    </button>
+    </div>
       </div>
     </motion.div>
   );
@@ -73,6 +78,7 @@ const ProductsSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
   const productsPerPage = 10;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -120,9 +126,29 @@ const ProductsSection = () => {
     setCurrentPage(1);
   }, [products, selectedCategory, sortBy, searchTerm]);
 
-  const handleAddToCart = (productId) => {
-    console.log(`Added product ${productId} to cart`);
-    // Implement add to cart logic
+  const handleAddToCart = (product) => {
+    // Add the product to the cart
+    addToCart(product);
+    // Navigate to the cart page
+    navigate('/cart');
+  };
+
+  const addToCart = (product) => {
+    // Update the cart state (e.g., using a context or Redux)
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const existingItem = cartItems.find(item => item.id === product.id);
+  
+    if (existingItem) {
+      // If the product already exists in the cart, update the quantity
+      cartItems = cartItems.map(item =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+    } else {
+      // If the product is new, add it to the cart with a quantity of 1
+      cartItems = [...cartItems, { ...product, quantity: 1 }];
+    }
+  
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
   };
 
   const handleToggleWishlist = (productId) => {
@@ -202,7 +228,10 @@ const ProductsSection = () => {
                   className={`py-1 px-4 rounded-full text-sm ${
                     selectedCategory === category ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'
                   }`}
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => {
+                    setSelectedCategory(category);
+                    setCurrentPage(1); // Reset the current page when a new category is selected
+                  }}
                 >
                   {category}
                 </button>
@@ -271,7 +300,10 @@ const ProductsSection = () => {
                   <button
                     key={pageNumber}
                     className={`mx-1 w-10 h-10 rounded-full ${currentPage === pageNumber ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 hover:bg-blue-100'} transition-colors duration-300`}
-                    onClick={() => paginate(pageNumber)}
+                    onClick={() => {
+                      setCurrentPage(pageNumber);
+                      setSelectedCategory('All'); // Reset the selected category when a new page is selected
+                    }}
                   >
                     {pageNumber}
                   </button>

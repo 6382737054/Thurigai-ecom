@@ -5,6 +5,7 @@ import Hero from './Pages/Hero';
 import ProductsSection from './Pages/Products';
 import AboutUsSection from './Pages/AboutUs';
 import Footer from './Components/Footer';
+import CartPage from './Pages/CartPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             } />
             <Route path="/products" element={<ProductsSection />} />
             <Route path="/about-us" element={<AboutUsSection />} />
+            <Route path="/cart" element={<CartPage/>}/>
             {/* Add more routes here as needed */}
           </Routes>
         </main>

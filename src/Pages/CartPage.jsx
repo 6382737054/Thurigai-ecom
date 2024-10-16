@@ -5,6 +5,12 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [recommendedProducts, setRecommendedProducts] = useState([
+    { id: 1, name: "Ornate Diya Set", category: "Decor", price: 599, rating: 4.5, reviews: 120, image: "/Images/product1.png", description: "Beautifully crafted diya set for festive illumination." },
+    { id: 2, name: "Rangoli Stencil Kit", category: "Art", price: 299, rating: 4.2, reviews: 85, image: "/Images/product1.png", description: "Create stunning rangoli designs with ease." },
+    { id: 3, name: "Festive Kurta - Men", category: "Clothing", price: 1499, rating: 4.7, reviews: 200, image: "/Images/product1.png", description: "Elegant kurta for men, perfect for Diwali celebrations." },
+    { id: 4, name: "Lakshmi-Ganesh Idol", category: "Religious", price: 2999, rating: 4.9, reviews: 300, image: "/Images/product1.png", description: "Auspicious Lakshmi-Ganesh idol for prosperity." },
+  ]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,6 +44,32 @@ const CartPage = () => {
   const handleCheckout = () => {
     // Implement checkout logic, e.g., navigate to the checkout page
     navigate('/checkout');
+  };
+
+  const handleAddToCart = (product) => {
+    // Add the product to the cart
+    addToCart(product);
+    // Update the cart items state
+    const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    setCartItems(storedCartItems);
+  };
+
+  const addToCart = (product) => {
+    // Update the cart state (e.g., using a context or Redux)
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const existingItem = cartItems.find(item => item.id === product.id);
+
+    if (existingItem) {
+      // If the product already exists in the cart, update the quantity
+      cartItems = cartItems.map(item =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+    } else {
+      // If the product is new, add it to the cart with a quantity of 1
+      cartItems = [...cartItems, { ...product, quantity: 1 }];
+    }
+
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
   };
 
   const fadeInUp = {
@@ -174,6 +206,36 @@ const CartPage = () => {
             </motion.div>
           </div>
         )}
+<motion.div className="mt-16 mb-24" {...fadeInUp}>
+  <h2 className="text-2xl font-semibold text-gray-800 mb-6 font-['Playfair_Display',serif]">
+    You might also like
+  </h2>
+  <div className="grid grid-cols-4 gap-6">
+    {recommendedProducts.map((product, index) => (
+      <motion.div
+        key={product.id}
+        className="bg-white shadow-md rounded-lg overflow-hidden transition duration-300 ease-in-out transform hover:shadow-xl hover:-translate-y-1"
+        whileHover={{ scale: 1.03 }}
+      >
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-48 object-cover"
+        />
+        <div className="p-4">
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">{product.name}</h3>
+          <p className="text-gray-600 mb-3">₹{product.price.toLocaleString()}</p>
+          <button
+            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 ease-in-out"
+            onClick={() => handleAddToCart(product)}
+          >
+            Add to Cart
+          </button>
+        </div>
+      </motion.div>
+    ))}
+  </div>
+</motion.div>
       </div>
     </div>
   );
