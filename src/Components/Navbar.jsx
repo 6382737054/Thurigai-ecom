@@ -10,7 +10,7 @@ const NavBar = () => {
     setIsOpen(!isOpen);
   };
 
-  const menuItems = ['Home', 'Products', 'About Us', 'Gifting', 'Why Us'];
+  const menuItems = ['Home', 'Products', 'About Us', 'Gifting', 'Gallery',];
 
   const isActive = (path) => {
     return location.pathname === path;

@@ -9,6 +9,7 @@ import CartPage from './Pages/CartPage';
 import WhatsAppButton from './Components/WhatsappButton';
 import PhoneButton from './Components/PhoneButton';
 import ProductDescription from './Pages/ProductDescription'; // Import the new component
+import Gallery from './Pages/Gallery';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -32,6 +33,7 @@ function App() {
             <Route path="/product/:id" element={<ProductDescription />} /> {/* New route for product description */}
             <Route path="/about-us" element={<AboutUsSection />} />
             <Route path="/cart" element={<CartPage/>} />
+            <Route path="/gallery" element={<Gallery/>}/>
           </Routes>
         </main>
         <Footer className="mt-auto" />
