@@ -6,7 +6,8 @@ import ProductsSection from './Pages/Products';
 import AboutUsSection from './Pages/AboutUs';
 import Footer from './Components/Footer';
 import CartPage from './Pages/CartPage';
-import WhatsAppButton from './Components/WhatsappButton'; // You'll need to create this component
+import WhatsAppButton from './Components/WhatsappButton';
+import PhoneButton from './Components/PhoneButton';
 
 function App() {
   return (
@@ -27,7 +28,10 @@ function App() {
           </Routes>
         </main>
         <Footer className="mt-auto" />
-        <WhatsAppButton /> {/* Add the WhatsApp button here */}
+        <div className="fixed bottom-4 right-4 flex flex-col items-end space-y-4 z-50">
+          <PhoneButton phoneNumber="1234567890" />
+          <WhatsAppButton />
+        </div>
       </div>
     </Router>
   );
