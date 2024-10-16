@@ -4,23 +4,23 @@ import { ShoppingCart, Heart, Star, Search, ChevronLeft, ChevronRight, Filter } 
 import { useNavigate } from 'react-router-dom';
 
 const mockProducts = [
-  { id: 1, name: "Ornate Diya Set", category: "Decor", price: 599, rating: 4.5, reviews: 120, image: "/Images/product1.png", description: "Beautifully crafted diya set for festive illumination." },
-  { id: 2, name: "Rangoli Stencil Kit", category: "Art", price: 299, rating: 4.2, reviews: 85, image: "/Images/product1.png", description: "Create stunning rangoli designs with ease." },
-  { id: 3, name: "Festive Kurta - Men", category: "Clothing", price: 1499, rating: 4.7, reviews: 200, image: "/Images/product1.png", description: "Elegant kurta for men, perfect for Diwali celebrations." },
-  { id: 4, name: "Lakshmi-Ganesh Idol", category: "Religious", price: 2999, rating: 4.9, reviews: 300, image: "/Images/product1.png", description: "Auspicious Lakshmi-Ganesh idol for prosperity." },
-  { id: 5, name: "Diwali Sweets Box", category: "Food", price: 799, rating: 4.4, reviews: 150, image: "/Images/product1.png", description: "Assorted traditional sweets for gifting." },
-  { id: 6, name: "Decorative String Lights", category: "Decor", price: 399, rating: 4.3, reviews: 110, image: "/Images/product1.png", description: "Sparkle up your home with these beautiful lights." },
-  { id: 7, name: "Diwali Greeting Cards Set", category: "Stationery", price: 199, rating: 4.1, reviews: 80, image: "/Images/product1.png", description: "Beautifully designed cards for Diwali wishes." },
-  { id: 8, name: "Traditional Oil Lamp", category: "Decor", price: 499, rating: 4.6, reviews: 95, image: "/Images/product1.png", description: "Authentic brass oil lamp for traditional touch." },
-  { id: 9, name: "Fireworks Safety Kit", category: "Safety", price: 699, rating: 4.8, reviews: 220, image: "/Images/product1.png", description: "Essential safety gear for enjoying fireworks responsibly." },
-  { id: 10, name: "Diwali Recipe Book", category: "Books", price: 349, rating: 4.5, reviews: 130, image: "/Images/product1.png", description: "Collection of traditional Diwali recipes and sweets." },
-  { id: 11, name: "Festive Home Decor Set", category: "Decor", price: 1299, rating: 4.7, reviews: 180, image: "/Images/product1.png", description: "Complete set to decorate your home for Diwali." },
-  { id: 12, name: "Designer Diyas (Set of 6)", category: "Decor", price: 449, rating: 4.4, reviews: 140, image: "/Images/product1.png", description: "Artistically crafted diyas to elevate your decor." },
-  { id: 13, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4.8, reviews: 250, image: "/Images/product1.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
-  { id: 14, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4.8, reviews: 250, image: "/Images/product1.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
-  { id: 15, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4, reviews: 250, image: "/Images/product1.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
-  { id: 16, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4.8, reviews: 250, image: "/Images/product1.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
-  { id: 17, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4.8, reviews: 250, image: "/Images/product1.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
+  { id: 1, name: "Ornate Diya Set", category: "Decor", price: 599, rating: 4.5, reviews: 120, image: "/Images/Products/product1.png", description: "Beautifully crafted diya set for festive illumination." },
+  { id: 2, name: "Rangoli Stencil Kit", category: "Art", price: 299, rating: 4.2, reviews: 85, image: "/Images/Products/product2.png", description: "Create stunning rangoli designs with ease." },
+  { id: 3, name: "Festive Kurta - Men", category: "Clothing", price: 1499, rating: 4.7, reviews: 200, image: "/Images/Products/product3.png", description: "Elegant kurta for men, perfect for Diwali celebrations." },
+  { id: 4, name: "Lakshmi-Ganesh Idol", category: "Religious", price: 2999, rating: 4.9, reviews: 300, image: "/Images/Products/product4.png", description: "Auspicious Lakshmi-Ganesh idol for prosperity." },
+  { id: 5, name: "Diwali Sweets Box", category: "Food", price: 799, rating: 4.4, reviews: 150, image: "/Images/Products/product5.png", description: "Assorted traditional sweets for gifting." },
+  { id: 6, name: "Decorative String Lights", category: "Decor", price: 399, rating: 4.3, reviews: 110, image:"/Images/Products/product6.png", description: "Sparkle up your home with these beautiful lights." },
+  { id: 7, name: "Diwali Greeting Cards Set", category: "Stationery", price: 199, rating: 4.1, reviews: 80, image: "/Images/Products/product7.png",description: "Beautifully designed cards for Diwali wishes." },
+  { id: 8, name: "Traditional Oil Lamp", category: "Decor", price: 499, rating: 4.6, reviews: 95, image: "/Images/Products/product8.png", description: "Authentic brass oil lamp for traditional touch." },
+  { id: 9, name: "Fireworks Safety Kit", category: "Safety", price: 699, rating: 4.8, reviews: 220, image:"/Images/Products/product9.png", description: "Essential safety gear for enjoying fireworks responsibly." },
+  { id: 10, name: "Diwali Recipe Book", category: "Books", price: 349, rating: 4.5, reviews: 130, image: "/Images/Products/product10.png", description: "Collection of traditional Diwali recipes and sweets." },
+  { id: 11, name: "Festive Home Decor Set", category: "Decor", price: 1299, rating: 4.7, reviews: 180, image: "/Images/Products/product11.png", description: "Complete set to decorate your home for Diwali." },
+  { id: 12, name: "Designer Diyas (Set of 6)", category: "Decor", price: 449, rating: 4.4, reviews: 140, image: "/Images/Products/product12.png", description: "Artistically crafted diyas to elevate your decor." },
+  { id: 13, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4.8, reviews: 250, image: "/Images/Products/product13.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
+  { id: 14, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4.8, reviews: 250, image: "/Images/Products/product14.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
+  { id: 15, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4, reviews: 250, image:"/Images/Products/product15.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
+  { id: 16, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4.8, reviews: 250, image: "/Images/Products/product16.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
+  
 ];
 
 const ProductCard = ({ product, onAddToCart, onToggleWishlist }) => {
@@ -29,7 +29,7 @@ const ProductCard = ({ product, onAddToCart, onToggleWishlist }) => {
       className="bg-white rounded-xl shadow-lg overflow-hidden relative flex flex-col transition-all duration-300 hover:shadow-xl"
       whileHover={{ y: -5 }}
     >
-      <div className="relative w-full h-60">
+      <div className="relative w-full h-64">
         <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black bg-opacity-20 transition-opacity duration-300 opacity-0 hover:opacity-100 flex items-center justify-center">
           <button
