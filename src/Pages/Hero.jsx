@@ -186,40 +186,40 @@ const Hero = () => {
               </div>
             </motion.div>
   
-            <motion.div  
-              className="w-full md:w-1/2 md:pl-12"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              <h2 className="text-3xl font-bold text-[#8b4513] mb-6 flex items-center font-['Playfair_Display',serif]">
-                <Star className="mr-2" size={32} color="#FFC107" /> Featured Products
-              </h2>
-              {products.map((product, index) => (
-                <motion.div
-                  key={index}
-                  className={`mb-4 p-6 w-full md:w-[80%] rounded-lg cursor-pointer transition-all font-['Open_Sans',sans-serif] ${
-                    activeProduct === index ? 'bg-[#f0d088] shadow-lg' : 'bg-white shadow-md'
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  onClick={() => setActiveProduct(index)}
-                >
-                  <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2 font-['Playfair_Display',serif]">{product.name}</h3>
-                  <p className="text-[#6c6c6c]">{product.description}</p>
-                </motion.div>
-              ))}
-              <div className="mt-8 flex justify-center">
-                <Link to="/products">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-[#1e5b5e] text-white py-3 px-8 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 flex items-center font-['Montserrat',sans-serif]"
-                  >
-                    <ShoppingBag className="mr-4" size={24} /> Shop Now
-                  </motion.button>
-                </Link>
-              </div>
-            </motion.div>
+            <motion.div
+  className="w-full md:w-1/2 md:pl-12"
+  initial={{ opacity: 0, x: 50 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.8, delay: 0.4 }}
+>
+  <h2 className="text-3xl font-bold text-[#8b4513] mb-6 flex items-center font-['Playfair_Display',serif]">
+    <Star className="mr-2" size={32} color="#FFC107" /> Featured Products
+  </h2>
+  {products.map((product, index) => (
+    <motion.div
+      key={index}
+      className={`mb-4 p-6 w-full md:w-[80%] rounded-lg cursor-pointer transition-all font-['Open_Sans',sans-serif] ${
+        activeProduct === index ? 'bg-[#f0d088] shadow-lg' : 'bg-white shadow-md'
+      }`}
+      whileHover={{ scale: 1.05 }}
+      onClick={() => setActiveProduct(index)}
+    >
+      <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2 font-['Playfair_Display',serif]">{product.name}</h3>
+      <p className="text-[#6c6c6c]">{product.description}</p>
+    </motion.div>
+  ))}
+  <div className="mt-8 flex justify-center">
+    <Link to="/products">
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="bg-[#e77070] text-white py-3 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 flex items-center font-['Montserrat',sans-serif] ml-1"
+      >
+        <ShoppingBag className="mr-1" size={20} /> Shop Now
+      </motion.button>
+    </Link>
+  </div>
+</motion.div>
           </div>
         </AnimatedSection>
   
@@ -257,7 +257,7 @@ const Hero = () => {
                 <motion.button
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
-    className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 font-['Montserrat',sans-serif]"
+    className="bg-[#ff6b6b] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 font-['Montserrat',sans-serif]"
   >
     <Link to="/products">
       <div className="flex items-center">
@@ -277,7 +277,7 @@ const Hero = () => {
                 <motion.button
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
-    className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 font-['Montserrat',sans-serif]"
+    className="bg-[#ff6b6b] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 font-['Montserrat',sans-serif]"
   >
     <Link to="/products">
       <div className="flex items-center">
@@ -297,7 +297,7 @@ const Hero = () => {
                 <motion.button
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
-    className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 font-['Montserrat',sans-serif]"
+    className="bg-[#ff6b6b] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 font-['Montserrat',sans-serif]"
   >
     <Link to="/products">
       <div className="flex items-center">
