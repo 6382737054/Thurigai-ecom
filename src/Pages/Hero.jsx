@@ -145,7 +145,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#F5E6CF] to-[#f9f7f4] min-h-screen py-20 px-2 sm:px-4 lg:px-6 pt-44 font-['Lato',sans-serif]">
+    <div className="bg-gradient-to-br from-[#f6e9d7] to-[#efeeec] min-h-screen py-20 px-2 sm:px-4 lg:px-6 pt-44 font-['Lato',sans-serif]">
       <div className="max-w-7xl mx-auto">
         <AnimatedSection>
           <motion.div
