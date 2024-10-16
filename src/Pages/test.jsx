@@ -151,10 +151,10 @@ const Hero = () => {
           <motion.div
             className="text-center mb-12"
           >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#3a7ca5] mb-4 font-['Playfair_Display',serif]">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#8b4513] mb-4 font-['Playfair_Display',serif]">
               Diwali Home Fest
             </h1>
-            <p className="text-xl text-[#4a6fa5] max-w-2xl mx-auto font-['Open_Sans',sans-serif]">
+            <p className="text-xl text-[#6c4a3d] max-w-2xl mx-auto font-['Open_Sans',sans-serif]">
               Celebrate with handcrafted essentials that bring the magic of India's festivities into your home.
             </p>
           </motion.div>
@@ -187,39 +187,39 @@ const Hero = () => {
             </motion.div>
   
             <motion.div
-              className="w-full md:w-1/2 md:pl-12"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              <h2 className="text-3xl font-bold text-[#3a7ca5] mb-6 flex items-center font-['Playfair_Display',serif]">
-                <Star className="mr-2" size={32} color="#4a6fa5" /> Featured Products
-              </h2>
-              {products.map((product, index) => (
-                <motion.div
-                  key={index}
-                  className={`mb-4 p-6 w-full md:w-[80%] rounded-lg cursor-pointer transition-all font-['Open_Sans',sans-serif] ${
-                    activeProduct === index ? 'bg-[#c7ddef] shadow-lg' : 'bg-white shadow-md'
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  onClick={() => setActiveProduct(index)}
-                >
-                  <h3 className="text-xl font-semibold text-[#2c3e50] mb-2 font-['Playfair_Display',serif]">{product.name}</h3>
-                  <p className="text-[#4a6fa5]">{product.description}</p>
-                </motion.div>
-              ))}
-              <div className="mt-8 flex justify-center">
-                <Link to="/products">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-[#3a7ca5] text-white py-3 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 flex items-center font-['Montserrat',sans-serif] ml-1"
-                  >
-                    <ShoppingBag className="mr-1" size={20} /> Shop Now
-                  </motion.button>
-                </Link>
-              </div>
-            </motion.div>
+  className="w-full md:w-1/2 md:pl-12"
+  initial={{ opacity: 0, x: 50 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.8, delay: 0.4 }}
+>
+  <h2 className="text-3xl font-bold text-[#8b4513] mb-6 flex items-center font-['Playfair_Display',serif]">
+    <Star className="mr-2" size={32} color="#FFC107" /> Featured Products
+  </h2>
+  {products.map((product, index) => (
+    <motion.div
+      key={index}
+      className={`mb-4 p-6 w-full md:w-[80%] rounded-lg cursor-pointer transition-all font-['Open_Sans',sans-serif] ${
+        activeProduct === index ? 'bg-[#f0d088] shadow-lg' : 'bg-white shadow-md'
+      }`}
+      whileHover={{ scale: 1.05 }}
+      onClick={() => setActiveProduct(index)}
+    >
+      <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2 font-['Playfair_Display',serif]">{product.name}</h3>
+      <p className="text-[#6c6c6c]">{product.description}</p>
+    </motion.div>
+  ))}
+  <div className="mt-8 flex justify-center">
+    <Link to="/products">
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="bg-[#e77070] text-white py-3 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 flex items-center font-['Montserrat',sans-serif] ml-1"
+      >
+        <ShoppingBag className="mr-1" size={20} /> Shop Now
+      </motion.button>
+    </Link>
+  </div>
+</motion.div>
           </div>
         </AnimatedSection>
   
@@ -229,14 +229,14 @@ const Hero = () => {
               gradient={false}
               speed={50}
               pauseOnHover={true}
-              className="bg-gradient-to-r from-[#c7ddef] to-[#e5f0f9] py-8 rounded-lg shadow-xl"
+              className="bg-gradient-to-r from-[#f0d088] to-[#e5d3ba] py-8 rounded-lg shadow-xl"
             >
               {marqueeItems.map((item, index) => (
                 <div key={index} className="mx-8 flex items-center">
                   {item.type === 'image' ? (
                     <img src={item.content} alt={item.alt} className="h-24 w-24 object-cover rounded-full border-4 border-white shadow-md" />
                   ) : (
-                    <h3 className="text-2xl font-bold text-[#3a7ca5] font-['Playfair_Display',serif]">{item.content}</h3>
+                    <h3 className="text-2xl font-bold text-[#8b4513] font-['Playfair_Display',serif]">{item.content}</h3>
                   )}
                 </div>
               ))}
@@ -246,17 +246,17 @@ const Hero = () => {
   
         <AnimatedSection>
           <motion.div className="mt-24">
-            <h2 className="text-3xl font-bold text-[#3a7ca5] mb-8 text-center font-['Playfair_Display',serif]">Exclusive Diwali Bundles</h2>
+            <h2 className="text-3xl font-bold text-[#FF6B6B] mb-8 text-center font-['Playfair_Display',serif]">Exclusive Diwali Bundles</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#c7ddef] flex flex-col">
+              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#FFD6E3] flex flex-col">
                 <img src="/Images/Bundle1.png" alt="Diwali Bundle 1" className="w-full h-64 object-cover rounded-lg mb-4" />
-                <h3 className="text-xl font-semibold text-[#2c3e50] mb-2 font-['Playfair_Display',serif]">Delightful Diwali Bundle</h3>
-                <p className="text-[#4a6fa5] mb-4 flex-grow font-['Open_Sans',sans-serif]">Includes an assortment of lanterns, candles, and decorative items to create a warm and inviting ambiance.</p>
+                <h3 className="text-xl font-semibold text-[#4A4A4A] mb-2 font-['Playfair_Display',serif]">Delightful Diwali Bundle</h3>
+                <p className="text-[#4A4A4A] mb-4 flex-grow font-['Poppins',sans-serif]">Includes an assortment of lanterns, candles, and decorative items to create a warm and inviting ambiance.</p>
                 <div className="mt-auto">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-[#3a7ca5] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 font-['Montserrat',sans-serif]"
+                    className="bg-[#4ECDC4] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#45B7AA] transition duration-300 font-['Poppins',sans-serif]"
                   >
                     <Link to="/products">
                       <div className="flex items-center">
@@ -267,15 +267,15 @@ const Hero = () => {
                   </motion.button>
                 </div>
               </div>
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#c7ddef] flex flex-col">
+              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#FFD6E3] flex flex-col">
                 <img src="/Images/Bundle2.png" alt="Diwali Bundle 2" className="w-full h-64 object-cover rounded-lg mb-4" />
-                <h3 className="text-xl font-semibold text-[#2c3e50] mb-2 font-['Playfair_Display',serif]">Festive Feast Bundle</h3>
-                <p className="text-[#4a6fa5] mb-4 flex-grow font-['Open_Sans',sans-serif]">Treat your loved ones to a selection of traditional sweets, savories, and delicacies.</p>
+                <h3 className="text-xl font-semibold text-[#4A4A4A] mb-2 font-['Playfair_Display',serif]">Festive Feast Bundle</h3>
+                <p className="text-[#4A4A4A] mb-4 flex-grow font-['Poppins',sans-serif]">Treat your loved ones to a selection of traditional sweets, savories, and delicacies.</p>
                 <div className="mt-auto">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-[#3a7ca5] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 font-['Montserrat',sans-serif]"
+                    className="bg-[#4ECDC4] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#45B7AA] transition duration-300 font-['Poppins',sans-serif]"
                   >
                     <Link to="/products">
                       <div className="flex items-center">
@@ -286,15 +286,15 @@ const Hero = () => {
                   </motion.button>
                 </div>
               </div>
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#c7ddef] flex flex-col">
+              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#FFD6E3] flex flex-col">
                 <img src="/Images/Bundle3.png" alt="Diwali Bundle 3" className="w-full h-64 object-cover rounded-lg mb-4" />
-                <h3 className="text-xl font-semibold text-[#2c3e50] mb-2 font-['Playfair_Display',serif]">Prosperity Package</h3>
-                <p className="text-[#4a6fa5] mb-4 flex-grow font-['Open_Sans',sans-serif]">Elevate your celebrations with a curated selection of premium products and festive essentials.</p>
+                <h3 className="text-xl font-semibold text-[#4A4A4A] mb-2 font-['Playfair_Display',serif]">Prosperity Package</h3>
+                <p className="text-[#4A4A4A] mb-4 flex-grow font-['Poppins',sans-serif]">Elevate your celebrations with a curated selection of premium products and festive essentials.</p>
                 <div className="mt-auto">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-[#3a7ca5] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 font-['Montserrat',sans-serif]"
+                    className="bg-[#4ECDC4] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#45B7AA] transition duration-300 font-['Poppins',sans-serif]"
                   >
                     <Link to="/products">
                       <div className="flex items-center">
@@ -311,27 +311,27 @@ const Hero = () => {
   
         <AnimatedSection>
           <motion.div className="mt-24">
-            <h2 className="text-3xl font-bold text-[#3a7ca5] mb-8 text-center font-['Playfair_Display',serif]">Why Choose Us</h2>
+            <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center font-['Playfair_Display',serif]">Why Choose Us</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#c7ddef] flex items-center">
-                <Truck className="mr-4 text-[#3a7ca5]" size={48} />
+              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#e5d3ba] flex items-center">
+                <Truck className="mr-4 text-[#1e5b5e]" size={48} />
                 <div>
                   <h3 className="text-xl font-semibold mb-2 font-['Playfair_Display',serif]">Fast and Reliable Shipping</h3>
-                  <p className="text-[#4a6fa5] font-['Open_Sans',sans-serif]">Get your festive essentials delivered right to your doorstep, in time for your celebrations.</p>
+                  <p className="text-[#6c6c6c] font-['Open_Sans',sans-serif]">Get your festive essentials delivered right to your doorstep, in time for your celebrations.</p>
                 </div>
               </div>
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#c7ddef] flex items-center">
-                <Star className="mr-4 text-[#3a7ca5]" size={48} />
+              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#d4b5bf] flex items-center">
+                <Star className="mr-4 text-[#1e5b5e]" size={48} />
                 <div>
                   <h3 className="text-xl font-semibold mb-2 font-['Playfair_Display',serif]">Handpicked Products</h3>
-                  <p className="text-[#4a6fa5] font-['Open_Sans',sans-serif]">We curate the finest selection of products to ensure the highest quality and craftsmanship.</p>
+                  <p className="text-[#6c6c6c] font-['Open_Sans',sans-serif]">We curate the finest selection of products to ensure the highest quality and craftsmanship.</p>
                 </div>
               </div>
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#c7ddef] flex items-center">
-                <Smile className="mr-4 text-[#3a7ca5]" size={48} />
+              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#c9a89a] flex items-center">
+                <Smile className="mr-4 text-[#1e5b5e]" size={48} />
                 <div>
                   <h3 className="text-xl font-semibold mb-2 font-['Playfair_Display',serif]">Exceptional Customer Service</h3>
-                  <p className="text-[#4a6fa5] font-['Open_Sans',sans-serif]">Our dedicated team is always ready to assist you and ensure your utmost satisfaction.</p>
+                  <p className="text-[#6c6c6c] font-['Open_Sans',sans-serif]">Our dedicated team is always ready to assist you and ensure your utmost satisfaction.</p>
                 </div>
               </div>
             </div>
@@ -340,7 +340,7 @@ const Hero = () => {
   
         <AnimatedSection>
           <motion.div className="mt-24">
-            <h2 className="text-3xl font-bold text-[#3a7ca5] mb-8 text-center font-['Playfair_Display',serif]">Featured Products Gallery</h2>
+            <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center font-['Playfair_Display',serif]">Featured Products Gallery</h2>
             <Swiper
               onSwiper={setSwiper}
               slidesPerView={4}
@@ -378,7 +378,7 @@ const Hero = () => {
   
         <AnimatedSection>
           <motion.div className="mt-24">
-            <h2 className="text-3xl font-bold text-[#3a7ca5] mb-12 text-center font-['Playfair_Display',serif]">Discover Our Diwali Specials</h2>
+            <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center font-['Playfair_Display',serif]">Discover Our Diwali Specials</h2>
             {alternatingContent.map((content, index) => (
               <motion.div
                 key={index}
@@ -392,116 +392,116 @@ const Hero = () => {
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <img src={content.image} alt={content.title} className="w-full h-[400px] object-cover rounded-lg shadow-2xl" />
-                </motion.div>
-                <motion.div
-                  className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pl-12' : 'md:pr-12'}`}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 + 0.2 * index }}
-                >
-                  <motion.h3 
-                    className="text-2xl font-bold text-[#3a7ca5] mb-4 font-['Playfair_Display',serif]"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {content.title}
-                  </motion.h3>
-                  <motion.p 
-                    className="text-[#4a6fa5] text-lg leading-relaxed mb-6 font-['Open_Sans',sans-serif]"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {content.description}
-                  </motion.p>
-                </motion.div>
+
+<img src={content.image} alt={content.title} className="w-full h-[400px] object-cover rounded-lg shadow-2xl" />
               </motion.div>
-            ))}
-          </motion.div>
-        </AnimatedSection>
-
-        <AnimatedSection>
-          <motion.div className="mt-24">
-            <h2 className="text-3xl font-bold text-[#3a7ca5] mb-12 text-center font-['Playfair_Display',serif]">What Our Customers Say</h2>
-            <div className="relative">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentTestimonial}
-                  className="bg-white rounded-lg shadow-xl p-6 flex flex-col items-center max-w-2xl mx-auto"
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.5 }}
+              <motion.div
+                className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pl-12' : 'md:pr-12'}`}
+                initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 + 0.2 * index }}
+              >
+                <motion.h3 
+                  className="text-2xl font-bold text-[#8b4513] mb-4 font-['Playfair_Display',serif]"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <img
-                    src={testimonials[currentTestimonial].image}
-                    alt={testimonials[currentTestimonial].name}
-                    className="w-20 h-20 rounded-full object-cover border-4 border-[#c7ddef] shadow-md mb-4"
-                  />
-                  <p className="text-[#2c3e50] text-lg italic mb-4 text-center font-['Open_Sans',sans-serif]">"{testimonials[currentTestimonial].text}"</p>
-                  <div className="mt-auto">
-                    <p className="font-semibold text-[#3a7ca5] text-center font-['Playfair_Display',serif]">{testimonials[currentTestimonial].name}</p>
-                    <p className="text-[#4a6fa5] text-sm text-center font-['Open_Sans',sans-serif]">{testimonials[currentTestimonial].location}</p>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-              
-              <div className="flex justify-center mt-8">
-                {testimonials.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentTestimonial(index)}
-                    className={`w-3 h-3 rounded-full mx-1 focus:outline-none transition-colors duration-300 ${
-                      currentTestimonial === index ? 'bg-[#3a7ca5]' : 'bg-[#c7ddef]'
-                    }`}
-                    aria-label={`View testimonial ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        </AnimatedSection>
+                  {content.title}
+                </motion.h3>
+                <motion.p 
+                  className="text-[#6c4a3d] text-lg leading-relaxed mb-6 font-['Open_Sans',sans-serif]"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {content.description}
+                </motion.p>
+              </motion.div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </AnimatedSection>
 
-        <AnimatedSection>
-          <motion.div className="mt-24">
-            <h2 className="text-3xl font-bold text-[#3a7ca5] mb-12 text-center font-['Playfair_Display',serif]">Key Features</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <div className="flex flex-col items-center text-center">
-                <div className="bg-[#c7ddef] rounded-full p-4 mb-4">
-                  <Package className="h-10 w-10 text-[#3a7ca5]" />
+      <AnimatedSection>
+        <motion.div className="mt-24">
+          <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center font-['Playfair_Display',serif]">What Our Customers Say</h2>
+          <div className="relative">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentTestimonial}
+                className="bg-white rounded-lg shadow-xl p-6 flex flex-col items-center max-w-2xl mx-auto"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.5 }}
+              >
+                <img
+                  src={testimonials[currentTestimonial].image}
+                  alt={testimonials[currentTestimonial].name}
+                  className="w-20 h-20 rounded-full object-cover border-4 border-[#f0d088] shadow-md mb-4"
+                />
+                <p className="text-[#4a4a4a] text-lg italic mb-4 text-center font-['Open_Sans',sans-serif]">"{testimonials[currentTestimonial].text}"</p>
+                <div className="mt-auto">
+                  <p className="font-semibold text-[#1e5b5e] text-center font-['Playfair_Display',serif]">{testimonials[currentTestimonial].name}</p>
+                  <p className="text-[#6c4a3d] text-sm text-center font-['Open_Sans',sans-serif]">{testimonials[currentTestimonial].location}</p>
                 </div>
-                <h3 className="text-xl font-semibold text-[#3a7ca5] mb-2 font-['Playfair_Display',serif]">Free delivery across India</h3>
-                <p className="text-[#4a6fa5] font-['Open_Sans',sans-serif]">Enjoy free delivery on orders over ₹999 within India and $59 internationally. We guarantee fast delivery.</p>
-              </div>
-              <div className="flex flex-col items-center text-center">
-                <div className="bg-[#c7ddef] rounded-full p-4 mb-4">
-                  <RefreshCw className="h-10 w-10 text-[#3a7ca5]" />
-                </div>
-                <h3 className="text-xl font-semibold text-[#3a7ca5] mb-2 font-['Playfair_Display',serif]">Easy replacement</h3>
-                <p className="text-[#4a6fa5] font-['Open_Sans',sans-serif]">If you receive a damaged product, we'll gladly take it back! Enjoy a hassle-free shopping experience.</p>
-              </div>
-              <div className="flex flex-col items-center text-center">
-                <div className="bg-[#c7ddef] rounded-full p-4 mb-4">
-                  <ShieldCheck className="h-10 w-10 text-[#3a7ca5]" />
-                </div>
-                <h3 className="text-xl font-semibold text-[#3a7ca5] mb-2 font-['Playfair_Display',serif]">100% Authentic</h3>
-                <p className="text-[#4a6fa5] font-['Open_Sans',sans-serif]">Shop with peace of mind knowing that all our products are 100% authentic.</p>
-              </div>
-              <div className="flex flex-col items-center text-center">
-                <div className="bg-[#c7ddef] rounded-full p-4 mb-4">
-                  <CreditCard className="h-10 w-10 text-[#3a7ca5]" />
-                </div>
-                <h3 className="text-xl font-semibold text-[#3a7ca5] mb-2 font-['Playfair_Display',serif]">Secure payments</h3>
-                <p className="text-[#4a6fa5] font-['Open_Sans',sans-serif]">Our website offers a 100% secure payment gateway, ensuring a completely safe shopping experience for you.</p>
-              </div>
+              </motion.div>
+            </AnimatePresence>
+            
+            <div className="flex justify-center mt-8">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentTestimonial(index)}
+                  className={`w-3 h-3 rounded-full mx-1 focus:outline-none transition-colors duration-300 ${
+                    currentTestimonial === index ? 'bg-[#8b4513]' : 'bg-[#e5d3ba]'
+                  }`}
+                  aria-label={`View testimonial ${index + 1}`}
+                />
+              ))}
             </div>
-          </motion.div>
-        </AnimatedSection>
-      </div>
+          </div>
+        </motion.div>
+      </AnimatedSection>
+
+      <AnimatedSection>
+        <motion.div className="mt-24">
+          <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center font-['Playfair_Display',serif]">Key Features</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-[#f0d088] rounded-full p-4 mb-4">
+                <Package className="h-10 w-10 text-[#b8860b]" />
+              </div>
+              <h3 className="text-xl font-semibold text-[#8b4513] mb-2 font-['Playfair_Display',serif]">Free delivery across India</h3>
+              <p className="text-[#6c4a3d] font-['Open_Sans',sans-serif]">Enjoy free delivery on orders over ₹999 within India and $59 internationally. We guarantee fast delivery.</p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-[#f0d088] rounded-full p-4 mb-4">
+                <RefreshCw className="h-10 w-10 text-[#b8860b]" />
+              </div>
+              <h3 className="text-xl font-semibold text-[#8b4513] mb-2 font-['Playfair_Display',serif]">Easy replacement</h3>
+
+              <p className="text-[#6c4a3d] font-['Open_Sans',sans-serif]">If you receive a damaged product, we'll gladly take it back! Enjoy a hassle-free shopping experience.</p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-[#f0d088] rounded-full p-4 mb-4">
+                <ShieldCheck className="h-10 w-10 text-[#b8860b]" />
+              </div>
+              <h3 className="text-xl font-semibold text-[#8b4513] mb-2 font-['Playfair_Display',serif]">100% Authentic</h3>
+              <p className="text-[#6c4a3d] font-['Open_Sans',sans-serif]">Shop with peace of mind knowing that all our products are 100% authentic.</p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-[#f0d088] rounded-full p-4 mb-4">
+                <CreditCard className="h-10 w-10 text-[#b8860b]" />
+              </div>
+              <h3 className="text-xl font-semibold text-[#8b4513] mb-2 font-['Playfair_Display',serif]">Secure payments</h3>
+              <p className="text-[#6c4a3d] font-['Open_Sans',sans-serif]">Our website offers a 100% secure payment gateway, ensuring a completely safe shopping experience for you.</p>
+            </div>
+          </div>
+        </motion.div>
+      </AnimatedSection>
     </div>
-  );
+  </div>
+);
 };
 
 export default Hero;
-                    
-               
