@@ -35,7 +35,7 @@ function App() {
         <Footer className="mt-auto" />
         {isLoaded && (
           <div className="fixed bottom-4 right-4 flex flex-col items-end space-y-4 z-50">
-            <PhoneButton phoneNumber="1234567890" />
+            <PhoneButton phoneNumber="9043705101" />
             <WhatsAppButton />
           </div>
         )}
