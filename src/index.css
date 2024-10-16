@@ -15,3 +15,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* If you had a style using the hero image, you can comment it out or remove it:
+.hero-section {
+  background-image: url('/hero-image.jpg');
+}
+*/
