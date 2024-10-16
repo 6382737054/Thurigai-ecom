@@ -34,24 +34,24 @@ const NavBar = () => {
             <Link to="/" className="flex items-center justify-center">
               <img 
                 src="/Images/Logo.png"
-                alt="Kuuraii Logo"
+                alt=" Logo"
                 className="h-16 w-auto object-contain"
               />
             </Link>
           </div>
           <div className="md:flex items-center justify-end w-1/3 hidden">
-            <button className="text-brown-500 hover:text-brown-700 hover:underline">
+            <button className="text-teal-500 hover:text-teal-700 hover:underline">
               <HeartIcon className="w-6 h-6" />
             </button>
-            <button className="text-brown-500 hover:text-brown-700 ml-4 hover:underline">
+            <button className="text-teal-500 hover:text-teal-700 ml-4 hover:underline">
               <UserIcon className="w-6 h-6" />
             </button>
             <Link 
-        to="/cart" 
-        className="text-brown-500 hover:text-brown-700 relative ml-4 hover:underline"
-      >
-        <ShoppingBagIcon className="w-6 h-6" />
-      </Link>
+              to="/cart" 
+              className="text-teal-500 hover:text-teal-700 relative ml-4 hover:underline"
+            >
+              <ShoppingBagIcon className="w-6 h-6" />
+            </Link>
           </div>
           <button className="md:hidden text-brown-500 hover:text-brown-700" onClick={toggleMenu}>
             <Bars3Icon className="w-6 h-6" />
@@ -102,18 +102,18 @@ const NavBar = () => {
             </Link>
           ))}
           <div className="px-4 py-2 flex items-center">
-            <button className="text-brown-500 hover:text-brown-700 hover:underline">
+            <button className="text-teal-500 hover:text-teal-700 hover:underline">
               <HeartIcon className="w-6 h-6" />
             </button>
-            <button className="text-brown-500 hover:text-brown-700 ml-4 hover:underline">
+            <button className="text-teal-500 hover:text-teal-700 ml-4 hover:underline">
               <UserIcon className="w-6 h-6" />
             </button>
             <Link 
-        to="/cart" 
-        className="text-brown-500 hover:text-brown-700 relative ml-4 hover:underline"
-      >
-        <ShoppingBagIcon className="w-6 h-6" />
-      </Link>
+              to="/cart" 
+              className="text-teal-500 hover:text-teal-700 relative ml-4 hover:underline"
+            >
+              <ShoppingBagIcon className="w-6 h-6" />
+            </Link>
           </div>
         </nav>
       )}
