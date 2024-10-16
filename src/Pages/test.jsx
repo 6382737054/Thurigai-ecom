@@ -1,293 +1,504 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingCart, Heart, Star, Search, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
+import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { ShoppingBag, Star, Gift, Truck, Smile, ChevronLeft, ChevronRight, Package, RefreshCw, ShieldCheck, CreditCard } from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import Marquee from 'react-fast-marquee';
+import { Link } from 'react-router-dom'; 
 
-const mockProducts = [
-  { id: 1, name: "Ornate Diya Set", category: "Decor", price: 599, rating: 4.5, reviews: 120, image: "/Images/product1.png", description: "Beautifully crafted diya set for festive illumination." },
-  { id: 2, name: "Rangoli Stencil Kit", category: "Art", price: 299, rating: 4.2, reviews: 85, image: "/Images/product1.png", description: "Create stunning rangoli designs with ease." },
-  { id: 3, name: "Festive Kurta - Men", category: "Clothing", price: 1499, rating: 4.7, reviews: 200, image: "/Images/product1.png", description: "Elegant kurta for men, perfect for Diwali celebrations." },
-  { id: 4, name: "Lakshmi-Ganesh Idol", category: "Religious", price: 2999, rating: 4.9, reviews: 300, image: "/Images/product1.png", description: "Auspicious Lakshmi-Ganesh idol for prosperity." },
-  { id: 5, name: "Diwali Sweets Box", category: "Food", price: 799, rating: 4.4, reviews: 150, image: "/Images/product1.png", description: "Assorted traditional sweets for gifting." },
-  { id: 6, name: "Decorative String Lights", category: "Decor", price: 399, rating: 4.3, reviews: 110, image: "/Images/product1.png", description: "Sparkle up your home with these beautiful lights." },
-  { id: 7, name: "Diwali Greeting Cards Set", category: "Stationery", price: 199, rating: 4.1, reviews: 80, image: "/Images/product1.png", description: "Beautifully designed cards for Diwali wishes." },
-  { id: 8, name: "Traditional Oil Lamp", category: "Decor", price: 499, rating: 4.6, reviews: 95, image: "/Images/product1.png", description: "Authentic brass oil lamp for traditional touch." },
-  { id: 9, name: "Fireworks Safety Kit", category: "Safety", price: 699, rating: 4.8, reviews: 220, image: "/Images/product1.png", description: "Essential safety gear for enjoying fireworks responsibly." },
-  { id: 10, name: "Diwali Recipe Book", category: "Books", price: 349, rating: 4.5, reviews: 130, image: "/Images/product1.png", description: "Collection of traditional Diwali recipes and sweets." },
-  { id: 11, name: "Festive Home Decor Set", category: "Decor", price: 1299, rating: 4.7, reviews: 180, image: "/Images/product1.png", description: "Complete set to decorate your home for Diwali." },
-  { id: 12, name: "Designer Diyas (Set of 6)", category: "Decor", price: 449, rating: 4.4, reviews: 140, image: "/Images/product1.png", description: "Artistically crafted diyas to elevate your decor." },
-  { id: 13, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4.8, reviews: 250, image: "/Images/product1.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
-];
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
-const ProductCard = ({ product, onAddToCart, onToggleWishlist }) => {
+const AnimatedSection = ({ children }) => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start('visible');
+    }
+  }, [controls, inView]);
+
   return (
-    <motion.div 
-      className="bg-white rounded-xl shadow-lg overflow-hidden relative flex flex-col transition-all duration-300 hover:shadow-xl"
-      whileHover={{ y: -5 }}
+    <motion.div
+      ref={ref}
+      animate={controls}
+      initial="hidden"
+      variants={{
+        visible: { opacity: 1, y: 0 },
+        hidden: { opacity: 0, y: 50 }
+      }}
+      transition={{ duration: 0.5 }}
     >
-      <div className="relative w-full h-60"> {/* Increased height to h-60 */}
-        <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-black bg-opacity-20 transition-opacity duration-300 opacity-0 hover:opacity-100 flex items-center justify-center">
-          <button
-            className="bg-white text-gray-800 rounded-full p-2 m-2 hover:bg-gray-100 transition-colors duration-300"
-            onClick={() => onToggleWishlist(product.id)}
-          >
-            <Heart className={`h-5 w-5 ${product.isWishlisted ? 'text-red-500 fill-red-500' : 'text-gray-600'}`} />
-          </button>
-        </div>
-      </div>
-      <div className="p-4 flex flex-col justify-between flex-1">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-800 mb-1 line-clamp-1">{product.name}</h3>
-          <div className="flex items-center mb-1">
-            <div className="flex">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className={`h-4 w-4 ${i < Math.floor(product.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} />
-              ))}
-            </div>
-            <span className="ml-2 text-sm text-gray-600">({product.reviews})</span>
-          </div>
-          <p className="text-gray-600 mb-2 line-clamp-2">{product.description}</p>
-        </div>
-        <div className="flex flex-col space-y-2">
-          <span className="text-xl font-bold text-gray-800">₹{product.price.toFixed(2)}</span>
-          <button
-            className="bg-blue-600 text-white py-2 px-4 rounded-full text-sm font-medium hover:bg-blue-700 transition duration-300 flex items-center justify-center"
-            onClick={() => onAddToCart(product.id)}
-          >
-            <ShoppingCart className="mr-2 h-4 w-4" />
-            Add to Cart
-          </button>
-        </div>
-      </div>
+      {children}
     </motion.div>
   );
 };
 
-const ProductsSection = () => {
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [sortBy, setSortBy] = useState('featured');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showFilters, setShowFilters] = useState(false);
-  const productsPerPage = 10;
+const Hero = () => {
+  const [activeProduct, setActiveProduct] = useState(0);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      // In a real application, you would fetch data from an API here
-      const data = mockProducts;
-      setProducts(data);
-      setFilteredProducts(data);
-      const uniqueCategories = ['All', ...new Set(data.map(product => product.category))];
-      setCategories(uniqueCategories);
-    };
+  const marqueeItems = [
+    { type: 'image', content: '/Images/marq1.png', alt: 'Diwali Lamp' },
+    { type: 'text', content: 'Exclusive Diwali Offers' },
+    { type: 'image', content: '/Images/marq2.png', alt: 'Rangoli Design' },
+    { type: 'text', content: 'Handcrafted with Love' },
+    { type: 'image', content: '/Images/marq3.png', alt: 'Festive Sweets' },
+    { type: 'text', content: 'Authentic Indian Flavors' },
+    { type: 'image', content: '/Images/marq4.png', alt: 'Diwali Decorations' },
+    { type: 'text', content: 'Transform Your Space' },
+  ];
+  
+  const products = [
+    { name: "Golden Bowl", image: "/Images/Hero1.png", description: "Elegant ceremonial bowl crafted by skilled artisans. Perfect for festive gatherings and special occasions." },
+    { name: "Diwali Lanterns", image: "/Images/Hero2.png", description: "Illuminate your home with these enchanting lanterns. Each piece is a work of art that casts a warm, inviting glow." },
+    { name: "Festive Treats", image: "/Images/Hero3.png", description: "Indulge in a selection of traditional delicacies, handmade with the finest ingredients to tantalize your taste buds." },
+  ];
 
-    fetchProducts();
-  }, []);
-
-  useEffect(() => {
-    let result = products;
-
-    if (selectedCategory !== 'All') {
-      result = result.filter(product => product.category === selectedCategory);
-    }
-
-    if (searchTerm) {
-      result = result.filter(product => 
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    switch (sortBy) {
-      case 'priceLowToHigh':
-        result.sort((a, b) => a.price - b.price);
-        break;
-      case 'priceHighToLow':
-        result.sort((a, b) => b.price - a.price);
-        break;
-      case 'topRated':
-        result.sort((a, b) => b.rating - a.rating);
-        break;
-      default:
-        result.sort((a, b) => b.reviews - a.reviews);
-        break;
-    }
-
-    setFilteredProducts(result);
-    setCurrentPage(1);
-  }, [products, selectedCategory, sortBy, searchTerm]);
-
-  const handleAddToCart = (productId) => {
-    console.log(`Added product ${productId} to cart`);
-    // Implement add to cart logic
+  const transitionProps = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -20 },
   };
 
-  const handleToggleWishlist = (productId) => {
-    setProducts(products.map(product => 
-      product.id === productId ? { ...product, isWishlisted: !product.isWishlisted } : product
-    ));
+  const images = [
+    "/Images/caro1.png",
+    "/Images/caro2.png",
+    "/Images/caro3.png",
+    "/Images/caro4.png",
+    "/Images/caro5.png",
+    "/Images/caro6.png",
+    "/Images/caro7.png",
+    "/Images/caro8.png",
+    "/Images/caro9.png",
+    "/Images/caro10.png",
+    "/Images/caro11.png",
+    "/Images/caro12.png",
+    "/Images/caro13.png",
+    "/Images/caro14.png",
+    "/Images/caro15.png",
+  ];
+
+  const [swiper, setSwiper] = useState(null);
+
+  useEffect(() => {
+    const autoplayInterval = setInterval(() => {
+      if (swiper) {
+        swiper.slideNext();
+      }
+    }, 3000);
+
+    return () => clearInterval(autoplayInterval);
+  }, [swiper]);
+
+  const alternatingContent = [
+    {
+      image: "/Images/alt1.png",
+      title: "Exquisite Diwali Decor",
+      description: "Transform your home into a festive wonderland with our carefully curated collection of Diwali decorations. From intricate rangoli designs to sparkling string lights, we have everything you need to create a magical atmosphere that captures the essence of this joyous occasion."
+    },
+    {
+      image: "/Images/alt2.png",
+      title: "Artisanal Diya Collection",
+      description: "Illuminate your space with our handcrafted diyas, each telling a unique story of tradition and craftsmanship. These beautiful oil lamps are not just decorative pieces but also symbols of hope, prosperity, and the triumph of light over darkness."
+    },
+    {
+      image: "/Images/alt3.png",
+      title: "Gourmet Festive Treats",
+      description: "Indulge in the flavors of Diwali with our premium selection of sweets and savories. From traditional favorites like kaju katli and gulab jamun to modern fusion delicacies, our gourmet treats are perfect for gifting or savoring with your loved ones during the festivities."
+    },
+  ];
+
+  const testimonials = [
+    {
+      name: "Priya Sharma",
+      location: "Mumbai",
+      text: "The Diwali decor I ordered was absolutely stunning. It transformed our home and made our celebration extra special!",
+      image: "/Images/Person.png"
+    },
+    {
+      name: "Rahul Mehta",
+      location: "Delhi",
+      text: "Fast delivery and excellent quality products. The artisanal diyas were a hit at our family gathering. Will definitely order again!",
+      image: "/Images/Person.png"
+    },
+    {
+      name: "Anita Kapoor",
+      location: "Bangalore",
+      text: "The festive treats bundle was a delight! Authentic taste and beautiful packaging. It was the perfect gift for my relatives.",
+      image: "/Images/Person.png"
+    }
+  ];
+
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  const nextTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
   };
 
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const prevTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
 
   return (
-    <div className="bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 min-h-screen pt-44">
+    <div className="bg-gradient-to-br from-[#F5E6CF] to-[#f9f7f4] min-h-screen py-20 px-2 sm:px-4 lg:px-6 pt-44">
       <div className="max-w-7xl mx-auto">
-        <motion.h2 
-          className="text-4xl font-bold text-gray-800 mb-8 text-center"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          Discover Our Diwali Collection
-        </motion.h2>
-        
-        <motion.div 
-          className="bg-white p-4 rounded-xl shadow-md mb-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <button
-                className="bg-blue-600 text-white py-2 px-4 rounded-full text-sm font-medium hover:bg-blue-700 transition duration-300 flex items-center"
-                onClick={() => setShowFilters(!showFilters)}
-              >
-                <Filter className="mr-2 h-4 w-4" />
-                Filters
-              </button>
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  className="bg-gray-100 border-none text-gray-800 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <Search className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+        <AnimatedSection>
+          <motion.div
+            className="text-center mb-12"
+          >
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#8b4513] mb-4">
+              Diwali Home Fest
+            </h1>
+            <p className="text-xl text-[#6c4a3d] max-w-2xl mx-auto">
+              Celebrate with handcrafted essentials that bring the magic of India's festivities into your home.
+            </p>
+          </motion.div>
+        </AnimatedSection>
+
+        <AnimatedSection>
+          <div className="flex flex-col md:flex-row items-center">
+            <motion.div  
+              className="w-full md:w-1/2 mb-8 md:mb-0"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <div className="relative w-full h-[500px]">
+                <AnimatePresence>
+                  {products.map((product, index) => (
+                    activeProduct === index && (
+                      <motion.img
+                        key={index}
+                        src={product.image}
+                        alt={product.name}
+                        className="absolute top-0 left-0 w-full h-full object-cover rounded-lg shadow-2xl"
+                        {...transitionProps}
+                        transition={{ duration: 0.5 }}
+                      />
+                    )
+                  ))}
+                </AnimatePresence>
+              </div>
+            </motion.div>
+
+            <motion.div  
+              className="w-full md:w-1/2 md:pl-12"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <h2 className="text-3xl font-bold text-[#8b4513] mb-6 flex items-center">
+                <Star className="mr-2" size={32} color="#FFC107" /> Featured Products
+              </h2>
+              {products.map((product, index) => (
+                <motion.div
+                  key={index}
+                  className={`mb-4 p-6 w-full md:w-[80%] rounded-lg cursor-pointer transition-all ${
+                    activeProduct === index ? 'bg-[#f0d088] shadow-lg' : 'bg-white shadow-md'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => setActiveProduct(index)}
+                >
+                  <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2">{product.name}</h3>
+                  <p className="text-[#6c6c6c]">{product.description}</p>
+                </motion.div>
+              ))}
+              <div className="mt-8 flex justify-center">
+  <Link to="/products">
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className="bg-[#1e5b5e] text-white py-3 px-8 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 flex items-center"
+    >
+      <ShoppingBag className="mr-4" size={24} /> Shop Now
+    </motion.button>
+  </Link>
+</div>
+            </motion.div>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection>
+          <motion.div className="mt-24">
+            <Marquee
+              gradient={false}
+              speed={50}
+              pauseOnHover={true}
+              className="bg-gradient-to-r from-[#f0d088] to-[#e5d3ba] py-8 rounded-lg shadow-xl"
+            >
+              {marqueeItems.map((item, index) => (
+                <div key={index} className="mx-8 flex items-center">
+                  {item.type === 'image' ? (
+                    <img src={item.content} alt={item.alt} className="h-24 w-24 object-cover rounded-full border-4 border-white shadow-md" />
+                  ) : (
+                    <h3 className="text-2xl font-bold text-[#8b4513]">{item.content}</h3>
+                  )}
+                </div>
+              ))}
+            </Marquee>
+          </motion.div>
+        </AnimatedSection>
+        <AnimatedSection>
+  <motion.div className="mt-24">
+    <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center">Exclusive Diwali Bundles</h2>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#FFD6E3] flex flex-col">
+        <img src="/Images/Bundle1.png" alt="Diwali Bundle 1" className="w-full h-64 object-cover rounded-lg mb-4" />
+        <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2">Delightful Diwali Bundle</h3>
+        <p className="text-[#6c6c6c] mb-4 flex-grow">Includes an assortment of lanterns, candles, and decorative items to create a warm and inviting ambiance.</p>
+        <div className="mt-auto">
+        <motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300"
+>
+  <Link to="/products">
+    <div className="flex items-center">
+      <Gift className="mr-2 inline-block" size={20} />
+      Buy Now
+    </div>
+  </Link>
+</motion.button>
+        </div>
+      </div>
+      <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#FFD6E3] flex flex-col">
+        <img src="/Images/Bundle2.png" alt="Diwali Bundle 2" className="w-full h-64 object-cover rounded-lg mb-4" />
+        <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2">Festive Feast Bundle</h3>
+        <p className="text-[#6c6c6c] mb-4 flex-grow">Treat your loved ones to a selection of traditional sweets, savories, and delicacies.</p>
+        <div className="mt-auto">
+        <motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300"
+>
+  <Link to="/products">
+    <div className="flex items-center">
+      <Gift className="mr-2 inline-block" size={20} />
+      Buy Now
+    </div>
+  </Link>
+</motion.button>
+        </div>
+      </div>
+      <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#FFD6E3] flex flex-col">
+        <img src="/Images/Bundle3.png" alt="Diwali Bundle 3" className="w-full h-64 object-cover rounded-lg mb-4" />
+        <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2">Prosperity Package</h3>
+        <p className="text-[#6c6c6c] mb-4 flex-grow">Elevate your celebrations with a curated selection of premium products and festive essentials.</p>
+        <div className="mt-auto">
+        <motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  className="bg-[#1e5b5e] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300"
+>
+  <Link to="/products">
+    <div className="flex items-center">
+      <Gift className="mr-2 inline-block" size={20} />
+      Buy Now
+    </div>
+  </Link>
+</motion.button>
+        </div>
+      </div>
+    </div>
+  </motion.div>
+</AnimatedSection>
+
+        <AnimatedSection>
+          <motion.div className="mt-24">
+            <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center">Why Choose Us</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#e5d3ba] flex items-center">
+                <Truck className="mr-4 text-[#1e5b5e]" size={48} />
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Fast and Reliable Shipping</h3>
+                  <p className="text-[#6c6c6c]">Get your festive essentials delivered right to your doorstep, in time for your celebrations.</p>
+                </div>
+              </div>
+              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#d4b5bf] flex items-center">
+                <Star className="mr-4 text-[#1e5b5e]" size={48} />
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Handpicked Products</h3>
+                  <p className="text-[#6c6c6c]">We curate the finest selection of products to ensure the highest quality and craftsmanship.</p>
+                </div>
+              </div>
+              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#c9a89a] flex items-center">
+                <Smile className="mr-4 text-[#1e5b5e]" size={48} />
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Exceptional Customer Service</h3>
+                  <p className="text-[#6c6c6c]">Our dedicated team is always ready to assist you and ensure your utmost satisfaction.</p>
+                </div>
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <select 
-                className="bg-gray-100 border-none text-gray-800 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-              >
-                <option value="featured">Featured</option>
-                <option value="priceLowToHigh">Price: Low to High</option>
-                <option value="priceHighToLow">Price: High to Low</option>
-                <option value="topRated">Top Rated</option>
-              </select>
-            </div>
-          </div>
-          {showFilters && (
-            <motion.div 
-              className="mt-4 flex flex-wrap gap-4"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {categories.map(category => (
-                <button
-                  key={category}
-                  className={`py-1 px-4 rounded-full text-sm ${
-                    selectedCategory === category ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'
-                  }`}
-                  onClick={() => setSelectedCategory(category)}
-                >
-                  {category}
-                </button>
-              ))}
-            </motion.div>
-          )}
-        </motion.div>
+          </motion.div>
+        </AnimatedSection>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence>
-            {currentProducts.map((product, index) => (
+        <AnimatedSection>
+          <motion.div className="mt-24">
+            <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center">Featured Products Gallery</h2>
+            <Swiper
+              onSwiper={setSwiper}
+              slidesPerView={4}
+              spaceBetween={10}
+              loop={true}
+              breakpoints={{
+                320: {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                },
+                640: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                },
+                1024: {
+                  slidesPerView: 4,
+                  spaceBetween: 40,
+                },
+              }}
+            >
+              {images.map((image, index) => (
+                <SwiperSlide key={index}>
+                  <div className="bg-white p-4 w-full md:w-[90%] rounded-lg shadow-md">
+                    <img src={image} alt={`Slide ${index + 1}`} className="w-full h-72 object-cover rounded-lg mb-4" />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </motion.div>
+        </AnimatedSection>
+
+        <AnimatedSection>
+          <motion.div className="mt-24">
+            <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center">Discover Our Diwali Specials</h2>
+            {alternatingContent.map((content, index) => (
               <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
+                key={index}
+                className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center mb-24`}
+                initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
+                transition={{ duration: 0.8, delay: 0.2 * index }}
               >
-                <ProductCard 
-                  product={product} 
-                  onAddToCart={handleAddToCart} 
-                  onToggleWishlist={handleToggleWishlist}
-                />
+                <motion.div
+                  className="w-full md:w-1/2 mb-8 md:mb-0"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <img src={content.image} alt={content.title} className="w-full h-[400px] object-cover rounded-lg shadow-2xl" />
+                </motion.div>
+                <motion.div
+                  className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pl-12' : 'md:pr-12'}`}
+                  initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 + 0.2 * index }}
+                >
+                  <motion.h3 
+                    className="text-2xl font-bold text-[#8b4513] mb-4"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {content.title}
+                  </motion.h3>
+                  <motion.p 
+                    className="text-[#6c4a3d] text-lg leading-relaxed mb-6"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {content.description}
+                  </motion.p>
+                </motion.div>
               </motion.div>
             ))}
-          </AnimatePresence>
-        </div>
-
-        {filteredProducts.length === 0 && (
-          <motion.p
-            className="text-center text-xl text-gray-600 mt-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            No products found. Try adjusting your search or filters.
-          </motion.p>
-        )}
-
-        {filteredProducts.length > 0 && (
-          <p className="text-center text-gray-600 mt-4">
-            Showing {currentProducts.length} of {filteredProducts.length} products
-          </p>
-        )}
-
-        {filteredProducts.length > productsPerPage && (
-          <motion.div
-            className="mt-12 flex justify-center items-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <button
-              className="mx-2 p-2 rounded-full bg-blue-600 text-white disabled:bg-gray-300 disabled:text-gray-500 hover:bg-blue-700 transition-colors duration-300"
-              onClick={() => paginate(currentPage > 1 ? currentPage - 1 : currentPage)}
-              disabled={currentPage === 1}
-            >
-              <ChevronLeft className="h-6 w-6" />
-            </button>
-            {[...Array(Math.ceil(filteredProducts.length / productsPerPage))]
-              .slice(Math.max(0, currentPage - 3), Math.min(currentPage + 2, Math.ceil(filteredProducts.length / productsPerPage)))
-              .map((_, index) => {
-                const pageNumber = Math.max(1, currentPage - 2) + index;
-                return (
-                  <button
-                    key={pageNumber}
-                    className={`mx-1 w-10 h-10 rounded-full ${currentPage === pageNumber ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 hover:bg-blue-100'} transition-colors duration-300`}
-                    onClick={() => paginate(pageNumber)}
-                  >
-                    {pageNumber}
-                  </button>
-                );
-              })}
-            <button
-              className="mx-2 p-2 rounded-full bg-blue-600 text-white disabled:bg-gray-300 disabled:text-gray-500 hover:bg-blue-700 transition-colors duration-300"
-              onClick={() => paginate(currentPage < Math.ceil(filteredProducts.length / productsPerPage) ? currentPage + 1 : currentPage)}
-              disabled={currentPage === Math.ceil(filteredProducts.length / productsPerPage)}
-            >
-              <ChevronRight className="h-6 w-6" />
-            </button>
           </motion.div>
-        )}
+        </AnimatedSection>
+
+        <AnimatedSection>
+          <motion.div className="mt-24">
+            <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center">What Our Customers Say</h2>
+            <div className="relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentTestimonial}
+                  className="bg-white rounded-lg shadow-xl p-6 flex flex-col items-center max-w-2xl mx-auto"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <img
+                    src={testimonials[currentTestimonial].image}
+                    alt={testimonials[currentTestimonial].name}
+                    className="w-20 h-20 rounded-full object-cover border-4 border-[#f0d088] shadow-md mb-4"
+                  />
+                  <p className="text-[#4a4a4a] text-lg italic mb-4 text-center">"{testimonials[currentTestimonial].text}"</p>
+                  <div className="mt-auto">
+                    <p className="font-semibold text-[#1e5b5e] text-center">{testimonials[currentTestimonial].name}</p>
+                    <p className="text-[#6c4a3d] text-sm text-center">{testimonials[currentTestimonial].location}</p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+              
+              <div className="flex justify-center mt-8">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentTestimonial(index)}
+                    className={`w-3 h-3 rounded-full mx-1 focus:outline-none transition-colors duration-300 ${
+                      currentTestimonial === index ? 'bg-[#8b4513]' : 'bg-[#e5d3ba]'
+                    }`}
+                    aria-label={`View testimonial ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </AnimatedSection>
+
+        <AnimatedSection>
+          <motion.div className="mt-24">
+            <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center">Key Features</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="flex flex-col items-center text-center">
+                <div className="bg-[#f0d088] rounded-full p-4 mb-4">
+                  <Package className="h-10 w-10 text-[#b8860b]" />
+                </div>
+                <h3 className="text-xl font-semibold text-[#8b4513] mb-2">Free delivery across India</h3>
+                <p className="text-[#6c4a3d]">Enjoy free delivery on orders over ₹999 within India and $59 internationally. We guarantee fast delivery.</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <div className="bg-[#f0d088] rounded-full p-4 mb-4">
+                  <RefreshCw className="h-10 w-10 text-[#b8860b]" />
+                </div>
+                <h3 className="text-xl font-semibold text-[#8b4513] mb-2">Easy replacement</h3>
+                <p className="text-[#6c4a3d]">If you receive a damaged product, we'll gladly take it back! Enjoy a hassle-free shopping experience.</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <div className="bg-[#f0d088] rounded-full p-4 mb-4">
+                  <ShieldCheck className="h-10 w-10 text-[#b8860b]" />
+                </div>
+                <h3 className="text-xl font-semibold text-[#8b4513] mb-2">100% Authentic</h3>
+                <p className="text-[#6c4a3d]">Shop with peace of mind knowing that all our products are 100% authentic.</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <div className="bg-[#f0d088] rounded-full p-4 mb-4">
+                  <CreditCard className="h-10 w-10 text-[#b8860b]" />
+                </div>
+                <h3 className="text-xl font-semibold text-[#8b4513] mb-2">Secure payments</h3>
+                <p className="text-[#6c4a3d]">Our website offers a 100% secure payment gateway, ensuring a completely safe shopping experience for you.</p>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatedSection>
       </div>
     </div>
   );
 };
 
-export default ProductsSection;
+export default Hero;
