@@ -151,10 +151,10 @@ const Hero = () => {
           <motion.div
             className="text-center mb-12"
           >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#8b4513] mb-4 font-['Playfair_Display',serif]">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#1A5F7A] mb-4 font-['Playfair_Display',serif]">
               Diwali Home Fest
             </h1>
-            <p className="text-xl text-[#6c4a3d] max-w-2xl mx-auto font-['Open_Sans',sans-serif]">
+            <p className="text-xl text-[#1A5F7A] max-w-2xl mx-auto font-['Open_Sans',sans-serif]">
               Celebrate with handcrafted essentials that bring the magic of India's festivities into your home.
             </p>
           </motion.div>
@@ -192,8 +192,8 @@ const Hero = () => {
   animate={{ opacity: 1, x: 0 }}
   transition={{ duration: 0.8, delay: 0.4 }}
 >
-  <h2 className="text-3xl font-bold text-[#8b4513] mb-6 flex items-center font-['Playfair_Display',serif]">
-    <Star className="mr-2" size={32} color="#FFC107" /> Featured Products
+  <h2 className="text-3xl font-bold text-[#1A5F7A] mb-6 flex items-center font-['Playfair_Display',serif]">
+    <Star className="mr-2" size={32} color="#1A5F7A" /> Featured Products
   </h2>
   {products.map((product, index) => (
     <motion.div
@@ -247,7 +247,7 @@ const Hero = () => {
         <AnimatedSection>
           <motion.div className="mt-24">
   
-          <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center font-['Playfair_Display',serif]">Exclusive Diwali Bundles</h2>
+          <h2 className="text-3xl font-bold text-[#1A5F7A] mb-8 text-center font-['Playfair_Display',serif]">Exclusive Diwali Bundles</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#FFD6E3] flex flex-col">
                 <img src="/Images/Bundle1.png" alt="Diwali Bundle 1" className="w-full h-64 object-cover rounded-lg mb-4" />
@@ -315,7 +315,7 @@ const Hero = () => {
   
         <AnimatedSection>
           <motion.div className="mt-24">
-            <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center font-['Playfair_Display',serif]">Why Choose Us</h2>
+            <h2 className="text-3xl font-bold text-[#1A5F7A] mb-8 text-center font-['Playfair_Display',serif]">Why Choose Us</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#e5d3ba] flex items-center">
                 <Truck className="mr-4 text-[#1e5b5e]" size={48} />
@@ -344,7 +344,7 @@ const Hero = () => {
   
         <AnimatedSection>
           <motion.div className="mt-24">
-            <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center font-['Playfair_Display',serif]">Featured Products Gallery</h2>
+            <h2 className="text-3xl font-bold text-[#1A5F7A] mb-8 text-center font-['Playfair_Display',serif]">Featured Products Gallery</h2>
             <Swiper
               onSwiper={setSwiper}
               slidesPerView={4}
@@ -382,7 +382,7 @@ const Hero = () => {
   
         <AnimatedSection>
           <motion.div className="mt-24">
-            <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center font-['Playfair_Display',serif]">Discover Our Diwali Specials</h2>
+            <h2 className="text-3xl font-bold text-[#1A5F7A] mb-12 text-center font-['Playfair_Display',serif]">Discover Our Diwali Specials</h2>
             {alternatingContent.map((content, index) => (
               <motion.div
                 key={index}
@@ -406,7 +406,7 @@ const Hero = () => {
                 transition={{ duration: 0.8, delay: 0.4 + 0.2 * index }}
               >
                 <motion.h3 
-                  className="text-2xl font-bold text-[#8b4513] mb-4 font-['Playfair_Display',serif]"
+                  className="text-2xl font-bold text-[#2C3E50] mb-4 font-['Playfair_Display',serif]"
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.3 }}
                 >
@@ -427,7 +427,7 @@ const Hero = () => {
 
       <AnimatedSection>
         <motion.div className="mt-24">
-          <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center font-['Playfair_Display',serif]">What Our Customers Say</h2>
+          <h2 className="text-3xl font-bold text-[#1A5F7A] mb-12 text-center font-['Playfair_Display',serif]">What Our Customers Say</h2>
           <div className="relative">
             <AnimatePresence mode="wait">
               <motion.div
@@ -469,7 +469,7 @@ const Hero = () => {
 
       <AnimatedSection>
         <motion.div className="mt-24">
-          <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center font-['Playfair_Display',serif]">Key Features</h2>
+          <h2 className="text-3xl font-bold text-[#1A5F7A] mb-12 text-center font-['Playfair_Display',serif]">Key Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="flex flex-col items-center text-center">
               <div className="bg-[#f0d088] rounded-full p-4 mb-4">
