@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingCart, Heart, Star, Search, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
+import { ShoppingCart, Heart, Star, Search, ChevronLeft, ChevronRight, Filter, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const mockProducts = [
+export const mockProducts = [
   { id: 1, name: "Ornate Diya Set", category: "Decor", price: 599, rating: 4.5, reviews: 120, image: "/Images/Products/product1.png", description: "Beautifully crafted diya set for festive illumination." },
   { id: 2, name: "Rangoli Stencil Kit", category: "Art", price: 299, rating: 4.2, reviews: 85, image: "/Images/Products/product2.png", description: "Create stunning rangoli designs with ease." },
   { id: 3, name: "Festive Kurta - Men", category: "Clothing", price: 1499, rating: 4.7, reviews: 200, image: "/Images/Products/product3.png", description: "Elegant kurta for men, perfect for Diwali celebrations." },
@@ -20,12 +20,11 @@ const mockProducts = [
   { id: 14, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4.8, reviews: 250, image: "/Images/Products/product14.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
   { id: 15, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4, reviews: 250, image:"/Images/Products/product15.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
   { id: 16, name: "Diwali Gift Hamper", category: "Gifts", price: 1599, rating: 4.8, reviews: 250, image: "/Images/Products/product16.png", description: "Luxurious gift hamper with assorted Diwali goodies." },
-  
 ];
 
-const ProductCard = ({ product, onAddToCart, onToggleWishlist }) => {
+const ProductCard = ({ product, onAddToCart, onToggleWishlist, onViewProduct }) => {
   return (
-<motion.div 
+    <motion.div 
       className="bg-white rounded-xl shadow-lg overflow-hidden relative flex flex-col transition-all duration-300 hover:shadow-xl"
       whileHover={{ y: -5 }}
     >
@@ -55,14 +54,21 @@ const ProductCard = ({ product, onAddToCart, onToggleWishlist }) => {
         </div>
         <div className="flex flex-col space-y-2">
           <span className="text-xl font-bold text-gray-800">₹{product.price.toFixed(2)}</span>
-    <button
-      className="bg-blue-600 text-white py-2 px-4 rounded-full text-sm font-medium hover:bg-blue-700 transition duration-300 flex items-center justify-center"
-      onClick={() => onAddToCart(product)}
-    >
-      <ShoppingCart className="mr-2 h-4 w-4" />
-      Add to Cart
-    </button>
-    </div>
+          <button
+            className="bg-blue-600 text-white py-2 px-4 rounded-full text-sm font-medium hover:bg-blue-700 transition duration-300 flex items-center justify-center"
+            onClick={() => onAddToCart(product)}
+          >
+            <ShoppingCart className="mr-2 h-4 w-4" />
+            Add to Cart
+          </button>
+          <button
+            className="bg-gray-200 text-gray-800 py-2 px-4 rounded-full text-sm font-medium hover:bg-gray-300 transition duration-300 flex items-center justify-center"
+            onClick={() => onViewProduct(product.id)}
+          >
+            <Eye className="mr-2 h-4 w-4" />
+            View Product
+          </button>
+        </div>
       </div>
     </motion.div>
   );
@@ -94,7 +100,7 @@ const ProductsSection = () => {
   }, []);
 
   useEffect(() => {
-    let result = [...products]; // Create a new array to avoid mutating the original
+    let result = [...products];
 
     if (selectedCategory !== 'All') {
       result = result.filter(product => product.category === selectedCategory);
@@ -127,24 +133,19 @@ const ProductsSection = () => {
   }, [products, selectedCategory, sortBy, searchTerm]);
 
   const handleAddToCart = (product) => {
-    // Add the product to the cart
     addToCart(product);
-    // Navigate to the cart page
     navigate('/cart');
   };
 
   const addToCart = (product) => {
-    // Update the cart state (e.g., using a context or Redux)
     let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     const existingItem = cartItems.find(item => item.id === product.id);
   
     if (existingItem) {
-      // If the product already exists in the cart, update the quantity
       cartItems = cartItems.map(item =>
         item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
       );
     } else {
-      // If the product is new, add it to the cart with a quantity of 1
       cartItems = [...cartItems, { ...product, quantity: 1 }];
     }
   
@@ -155,6 +156,10 @@ const ProductsSection = () => {
     setProducts(products.map(product => 
       product.id === productId ? { ...product, isWishlisted: !product.isWishlisted } : product
     ));
+  };
+
+  const handleViewProduct = (productId) => {
+    navigate(`/product/${productId}`);
   };
 
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -230,7 +235,7 @@ const ProductsSection = () => {
                   }`}
                   onClick={() => {
                     setSelectedCategory(category);
-                    setCurrentPage(1); // Reset the current page when a new category is selected
+                    setCurrentPage(1);
                   }}
                 >
                   {category}
@@ -254,6 +259,7 @@ const ProductsSection = () => {
                   product={product} 
                   onAddToCart={handleAddToCart} 
                   onToggleWishlist={handleToggleWishlist}
+                  onViewProduct={handleViewProduct}
                 />
               </motion.div>
             ))}
@@ -302,7 +308,7 @@ const ProductsSection = () => {
                     className={`mx-1 w-10 h-10 rounded-full ${currentPage === pageNumber ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 hover:bg-blue-100'} transition-colors duration-300`}
                     onClick={() => {
                       setCurrentPage(pageNumber);
-                      setSelectedCategory('All'); // Reset the selected category when a new page is selected
+                      setSelectedCategory('All');
                     }}
                   >
                     {pageNumber}

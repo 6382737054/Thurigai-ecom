@@ -8,6 +8,7 @@ import Footer from './Components/Footer';
 import CartPage from './Pages/CartPage';
 import WhatsAppButton from './Components/WhatsappButton';
 import PhoneButton from './Components/PhoneButton';
+import ProductDescription from './Pages/ProductDescription'; // Import the new component
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -28,8 +29,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Hero />} />
             <Route path="/products" element={<ProductsSection />} />
+            <Route path="/product/:id" element={<ProductDescription />} /> {/* New route for product description */}
             <Route path="/about-us" element={<AboutUsSection />} />
-            <Route path="/cart" element={<CartPage/>}/>
+            <Route path="/cart" element={<CartPage/>} />
           </Routes>
         </main>
         <Footer className="mt-auto" />
