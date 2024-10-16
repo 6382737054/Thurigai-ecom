@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, Heart, Star, ArrowLeft, Plus, Minus, X, Check, Facebook, Twitter, Instagram } from 'lucide-react';
@@ -12,6 +12,7 @@ const ProductDescription = () => {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const reviewsRef = useRef(null);
 
   useEffect(() => {
     const fetchedProduct = mockProducts.find(p => p.id === parseInt(id));
@@ -30,10 +31,27 @@ const ProductDescription = () => {
         { id: 3, user: "Michael R.", rating: 3, comment: "Decent product, but could use some improvements in durability.", date: "2024-03-05" },
         { id: 4, user: "Emily L.", rating: 5, comment: "This is exactly what I was looking for. Perfect fit for my needs!", date: "2024-02-28" },
         { id: 5, user: "David K.", rating: 4, comment: "Good product overall. Shipping was fast and packaging was secure.", date: "2024-02-20" },
+        { id: 6, user: "Lisa H.", rating: 5, comment: "Outstanding quality and customer service. Will buy again!", date: "2024-02-15" },
       ];
       setReviews(mockReviews);
     }
   }, [id]);
+
+  useEffect(() => {
+    const scrollReviews = () => {
+      if (reviewsRef.current) {
+        if (reviewsRef.current.scrollLeft >= reviewsRef.current.scrollWidth / 2) {
+          reviewsRef.current.scrollLeft = 0;
+        } else {
+          reviewsRef.current.scrollLeft += 1;
+        }
+      }
+    };
+
+    const intervalId = setInterval(scrollReviews, 50);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   if (!product) {
     return (
@@ -189,36 +207,50 @@ const ProductDescription = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <h3 className="text-2xl font-bold text-gray-800 mb-6">Customer Reviews</h3>
-          <div className="space-y-6">
-            {reviews.map((review) => (
-              <motion.div
-                key={review.id}
-                className="bg-white rounded-lg shadow-md p-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-800">{review.user}</h4>
-                    <p className="text-sm text-gray-500">{review.date}</p>
+          <div 
+            ref={reviewsRef}
+            className="overflow-hidden whitespace-nowrap"
+            style={{ scrollBehavior: 'smooth' }}
+          >
+            <div className="inline-flex space-x-6">
+              {reviews.concat(reviews).map((review, index) => (
+                <motion.div
+                  key={`${review.id}-${index}`}
+                  className="bg-white rounded-lg p-6 w-80 inline-block"
+                  style={{
+                    boxShadow: '0 4px 6px -1px rgba(251, 207, 232, 0.1), 0 2px 4px -1px rgba(251, 207, 232, 0.06)',
+                    transition: 'box-shadow 0.3s ease-in-out'
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  whileHover={{
+                    boxShadow: '0 10px 15px -3px rgba(251, 207, 232, 0.3), 0 4px 6px -2px rgba(251, 207, 232, 0.2)'
+                  }}
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h4 className="text-lg font-semibold text-gray-800">{review.user}</h4>
+                      <p className="text-sm text-gray-500">{review.date}</p>
+                    </div>
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-5 w-5 ${
+                            i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'
+                          }`}
+                        />
+                      ))}
+                    </div>
                   </div>
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-5 w-5 ${
-                          i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </div>
-                <p className="text-gray-600">{review.comment}</p>
-              </motion.div>
-            ))}
+                  <p className="text-gray-600 whitespace-normal">{review.comment}</p>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
+
 
         {relatedProducts.length > 0 && (
           <motion.div 
@@ -273,7 +305,8 @@ const ProductDescription = () => {
             onClick={() => handleSocialMediaClick('instagram')}
             className="bg-pink-600 text-white p-3 rounded-full hover:bg-pink-700 transition-colors duration-300"
           >
-            <Instagram size={24} />
+
+<Instagram size={24} />
           </button>
         </motion.div>
       </div>
