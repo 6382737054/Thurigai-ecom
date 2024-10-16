@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavBar from './Components/Navbar';
 import Hero from './Pages/Hero';
@@ -10,28 +10,35 @@ import WhatsAppButton from './Components/WhatsappButton';
 import PhoneButton from './Components/PhoneButton';
 
 function App() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 500); // Delay of 500ms
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Router>
-      <div className="App flex flex-col min-h-screen">
+      <div className="App flex flex-col min-h-screen relative">
         <NavBar />
         <main className="flex-grow">
           <Routes>
-            <Route path="/" element={
-              <>
-                <Hero />
-              </>
-            } />
+            <Route path="/" element={<Hero />} />
             <Route path="/products" element={<ProductsSection />} />
             <Route path="/about-us" element={<AboutUsSection />} />
             <Route path="/cart" element={<CartPage/>}/>
-            {/* Add more routes here as needed */}
           </Routes>
         </main>
         <Footer className="mt-auto" />
-        <div className="fixed bottom-4 right-4 flex flex-col items-end space-y-4 z-50">
-          <PhoneButton phoneNumber="1234567890" />
-          <WhatsAppButton />
-        </div>
+        {isLoaded && (
+          <div className="fixed bottom-4 right-4 flex flex-col items-end space-y-4 z-50">
+            <PhoneButton phoneNumber="1234567890" />
+            <WhatsAppButton />
+          </div>
+        )}
       </div>
     </Router>
   );
