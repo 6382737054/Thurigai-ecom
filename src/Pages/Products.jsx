@@ -41,28 +41,28 @@ const ProductCard = ({ product, onAddToCart, onToggleWishlist, onViewProduct }) 
       </div>
       <div className="p-4 flex flex-col justify-between flex-1">
         <div>
-          <h3 className="text-lg font-semibold text-gray-800 mb-1 line-clamp-1">{product.name}</h3>
+          <h3 className="text-lg font-semibold text-[#1A2E44] mb-1 line-clamp-1">{product.name}</h3>
           <div className="flex items-center mb-1">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className={`h-4 w-4 ${i < Math.floor(product.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} />
               ))}
             </div>
-            <span className="ml-2 text-sm text-gray-600">({product.reviews})</span>
+            <span className="ml-2 text-sm text-[#4A6FA5]">({product.reviews})</span>
           </div>
-          <p className="text-gray-600 mb-2 line-clamp-2">{product.description}</p>
+          <p className="text-[#4A6FA5] mb-2 line-clamp-2">{product.description}</p>
         </div>
         <div className="flex flex-col space-y-2">
-          <span className="text-xl font-bold text-gray-800">₹{product.price.toFixed(2)}</span>
+          <span className="text-xl font-bold text-[#1A2E44]">₹{product.price.toFixed(2)}</span>
           <button
-            className="bg-blue-600 text-white py-2 px-4 rounded-full text-sm font-medium hover:bg-blue-700 transition duration-300 flex items-center justify-center"
+            className="bg-[#E07A5F] text-white py-2 px-4 rounded-full text-sm font-medium hover:bg-[#C86D54] transition duration-300 flex items-center justify-center"
             onClick={() => onAddToCart(product)}
           >
             <ShoppingCart className="mr-2 h-4 w-4" />
             Add to Cart
           </button>
           <button
-            className="bg-gray-200 text-gray-800 py-2 px-4 rounded-full text-sm font-medium hover:bg-gray-300 transition duration-300 flex items-center justify-center"
+            className="bg-gray-200 text-[#1A2E44] py-2 px-4 rounded-full text-sm font-medium hover:bg-gray-300 transition duration-300 flex items-center justify-center"
             onClick={() => onViewProduct(product.id)}
           >
             <Eye className="mr-2 h-4 w-4" />
@@ -175,7 +175,7 @@ const ProductsSection = () => {
     <div className="bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 min-h-screen pt-44">
       <div className="max-w-7xl mx-auto">
         <motion.h2 
-          className="text-4xl font-bold text-gray-800 mb-8 text-center"
+          className="text-4xl font-bold text-[#1A2E44] mb-8 text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -192,7 +192,7 @@ const ProductsSection = () => {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <button
-                className="bg-blue-600 text-white py-2 px-4 rounded-full text-sm font-medium hover:bg-blue-700 transition duration-300 flex items-center"
+                className="bg-[#E07A5F] text-white py-2 px-4 rounded-full text-sm font-medium hover:bg-[#C86D54] transition duration-300 flex items-center"
                 onClick={() => setShowFilters(!showFilters)}
               >
                 <Filter className="mr-2 h-4 w-4" />
@@ -202,16 +202,16 @@ const ProductsSection = () => {
                 <input
                   type="text"
                   placeholder="Search products..."
-                  className="bg-gray-100 border-none text-gray-800 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
+                  className="bg-gray-100 border-none text-[#1A2E44] rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-[#E07A5F] w-64"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <Search className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+                <Search className="h-5 w-5 text-[#4A6FA5] absolute left-3 top-1/2 transform -translate-y-1/2" />
               </div>
             </div>
             <div className="flex items-center gap-4">
               <select 
-                className="bg-gray-100 border-none text-gray-800 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-gray-100 border-none text-[#1A2E44] rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#E07A5F]"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
               >
@@ -235,7 +235,7 @@ const ProductsSection = () => {
                 <button
                   key={category}
                   className={`py-1 px-4 rounded-full text-sm ${
-                    selectedCategory === category ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'
+                    selectedCategory === category ? 'bg-[#E07A5F] text-white' : 'bg-gray-200 text-[#1A2E44]'
                   }`}
                   onClick={() => {
                     setSelectedCategory(category);
@@ -272,7 +272,7 @@ const ProductsSection = () => {
 
         {filteredProducts.length === 0 && (
           <motion.p
-            className="text-center text-xl text-gray-600 mt-12"
+            className="text-center text-xl text-[#4A6FA5] mt-12"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -282,7 +282,7 @@ const ProductsSection = () => {
         )}
 
         {filteredProducts.length > 0 && (
-          <p className="text-center text-gray-600 mt-4">
+          <p className="text-center text-[#4A6FA5] mt-4">
             Showing {currentProducts.length} of {filteredProducts.length} products
           </p>
         )}
@@ -295,7 +295,7 @@ const ProductsSection = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <button
-              className="mx-2 p-2 rounded-full bg-blue-600 text-white disabled:bg-gray-300 disabled:text-gray-500 hover:bg-blue-700 transition-colors duration-300"
+              className="mx-2 p-2 rounded-full bg-[#E07A5F] text-white disabled:bg-gray-300 disabled:text-gray-500 hover:bg-[#C86D54] transition-colors duration-300"
               onClick={() => paginate(currentPage > 1 ? currentPage - 1 : currentPage)}
               disabled={currentPage === 1}
             >
@@ -309,7 +309,7 @@ const ProductsSection = () => {
                 return (
                   <button
                     key={pageNumber}
-                    className={`mx-1 w-10 h-10 rounded-full ${currentPage === pageNumber ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 hover:bg-blue-100'} transition-colors duration-300`}
+                    className={`mx-1 w-10 h-10 rounded-full ${currentPage === pageNumber ? 'bg-[#E07A5F] text-white' : 'bg-white text-[#E07A5F] hover:bg-[#FDF2F0]'} transition-colors duration-300`}
                     onClick={() => {
                       setCurrentPage(pageNumber);
                       setSelectedCategory('All');
@@ -320,7 +320,7 @@ const ProductsSection = () => {
                 );
               })}
             <button
-              className="mx-2 p-2 rounded-full bg-blue-600 text-white disabled:bg-gray-300 disabled:text-gray-500 hover:bg-blue-700 transition-colors duration-300"
+              className="mx-2 p-2 rounded-full bg-[#E07A5F] text-white disabled:bg-gray-300 disabled:text-gray-500 hover:bg-[#C86D54] transition-colors duration-300"
               onClick={() => paginate(currentPage < Math.ceil(filteredProducts.length / productsPerPage) ? currentPage + 1 : currentPage)}
               disabled={currentPage === Math.ceil(filteredProducts.length / productsPerPage)}
             >

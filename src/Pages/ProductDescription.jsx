@@ -56,10 +56,10 @@ const ProductDescription = () => {
   if (!product) {
     return (
       <div className="text-center mt-20">
-        <p className="text-xl text-gray-600">Product not found.</p>
+        <p className="text-xl text-[#4A6FA5]">Product not found.</p>
         <button
           onClick={() => navigate('/products')}
-          className="mt-4 text-blue-600 hover:text-blue-800 font-semibold"
+          className="mt-4 text-[#E07A5F] hover:text-[#C86D54] font-semibold"
         >
           Return to Products
         </button>
@@ -115,7 +115,7 @@ const ProductDescription = () => {
       <div className="max-w-7xl mx-auto">
         <motion.button
           onClick={() => navigate(-1)}
-          className="mb-8 flex items-center text-blue-600 hover:text-blue-800 font-semibold"
+          className="mb-8 flex items-center text-[#E07A5F] hover:text-[#C86D54] font-semibold"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
@@ -138,55 +138,55 @@ const ProductDescription = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">{product.name}</h2>
+              <h2 className="text-3xl font-bold text-[#1A2E44] mb-4">{product.name}</h2>
               <div className="flex items-center mb-4">
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className={`h-5 w-5 ${i < Math.floor(product.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} />
                   ))}
                 </div>
-                <span className="ml-2 text-gray-600">({product.reviews} reviews)</span>
+                <span className="ml-2 text-[#4A6FA5]">({product.reviews} reviews)</span>
               </div>
-              <p className="text-gray-600 mb-6">{product.description}</p>
+              <p className="text-[#4A6FA5] mb-6">{product.description}</p>
               <div className="flex items-center justify-between mb-6">
-                <span className="text-3xl font-bold text-gray-800">₹{product.price.toFixed(2)}</span>
-                <span className="text-lg text-gray-600">Category: {product.category}</span>
+                <span className="text-3xl font-bold text-[#1A2E44]">₹{product.price.toFixed(2)}</span>
+                <span className="text-lg text-[#4A6FA5]">Category: {product.category}</span>
               </div>
               <div className="flex items-center mb-6">
-                <span className="mr-4 text-gray-700">Quantity:</span>
+                <span className="mr-4 text-[#1A2E44]">Quantity:</span>
                 <button 
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="bg-gray-200 text-gray-700 rounded-full p-2"
+                  className="bg-gray-200 text-[#1A2E44] rounded-full p-2"
                 >
                   <Minus size={16} />
                 </button>
-                <span className="mx-4 text-xl font-semibold">{quantity}</span>
+                <span className="mx-4 text-xl font-semibold text-[#1A2E44]">{quantity}</span>
                 <button 
                   onClick={() => setQuantity(quantity + 1)}
-                  className="bg-gray-200 text-gray-700 rounded-full p-2"
+                  className="bg-gray-200 text-[#1A2E44] rounded-full p-2"
                 >
                   <Plus size={16} />
                 </button>
               </div>
               <div className="flex space-x-4 mb-6">
                 <button
-                  className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-full text-lg font-medium hover:bg-blue-700 transition duration-300 flex items-center justify-center"
+                  className="flex-1 bg-[#E07A5F] text-white py-3 px-6 rounded-full text-lg font-medium hover:bg-[#C86D54] transition duration-300 flex items-center justify-center"
                   onClick={handleAddToCart}
                 >
                   <ShoppingCart className="mr-2 h-5 w-5" />
                   Add to Cart
                 </button>
                 <button
-                  className="bg-gray-200 text-gray-800 py-3 px-6 rounded-full text-lg font-medium hover:bg-gray-300 transition duration-300 flex items-center justify-center"
+                  className="bg-gray-200 text-[#1A2E44] py-3 px-6 rounded-full text-lg font-medium hover:bg-gray-300 transition duration-300 flex items-center justify-center"
                   onClick={handleToggleWishlist}
                 >
-                  <Heart className={`h-5 w-5 ${product.isWishlisted ? 'text-red-500 fill-red-500' : 'text-gray-600'}`} />
+                  <Heart className={`h-5 w-5 ${product.isWishlisted ? 'text-red-500 fill-red-500' : 'text-[#1A2E44]'}`} />
                 </button>
               </div>
               {product.features && (
                 <div className="border-t border-gray-200 pt-6">
-                  <h3 className="text-lg font-semibold mb-2">Product Features:</h3>
-                  <ul className="list-disc list-inside text-gray-600">
+                  <h3 className="text-lg font-semibold mb-2 text-[#1A2E44]">Product Features:</h3>
+                  <ul className="list-disc list-inside text-[#4A6FA5]">
                     {product.features.map((feature, index) => (
                       <li key={index} className="flex items-center mb-2">
                         <Check size={16} className="mr-2 text-green-500" />
@@ -206,7 +206,7 @@ const ProductDescription = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <h3 className="text-2xl font-bold text-gray-800 mb-6">Customer Reviews</h3>
+          <h3 className="text-2xl font-bold text-[#1A2E44] mb-6">Customer Reviews</h3>
           <div 
             ref={reviewsRef}
             className="overflow-hidden whitespace-nowrap"
@@ -230,8 +230,8 @@ const ProductDescription = () => {
                 >
                   <div className="flex items-center justify-between mb-4">
                     <div>
-                      <h4 className="text-lg font-semibold text-gray-800">{review.user}</h4>
-                      <p className="text-sm text-gray-500">{review.date}</p>
+                      <h4 className="text-lg font-semibold text-[#1A2E44]">{review.user}</h4>
+                      <p className="text-sm text-[#4A6FA5]">{review.date}</p>
                     </div>
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
@@ -244,13 +244,12 @@ const ProductDescription = () => {
                       ))}
                     </div>
                   </div>
-                  <p className="text-gray-600 whitespace-normal">{review.comment}</p>
+                  <p className="text-[#4A6FA5] whitespace-normal">{review.comment}</p>
                 </motion.div>
               ))}
             </div>
           </div>
         </motion.div>
-
 
         {relatedProducts.length > 0 && (
           <motion.div 
@@ -259,19 +258,19 @@ const ProductDescription = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <h3 className="text-2xl font-bold text-gray-800 mb-6">Related Products</h3>
+            <h3 className="text-2xl font-bold text-[#1A2E44] mb-6">Related Products</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedProducts.map(relatedProduct => (
                 <div key={relatedProduct.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
                   <img className="w-full h-48 object-cover" src={relatedProduct.image} alt={relatedProduct.name} />
                   <div className="p-4">
-                    <h4 className="text-lg font-semibold text-gray-800 mb-2">{relatedProduct.name}</h4>
-                    <p className="text-gray-600 mb-2">{relatedProduct.description.slice(0, 50)}...</p>
+                    <h4 className="text-lg font-semibold text-[#1A2E44] mb-2">{relatedProduct.name}</h4>
+                    <p className="text-[#4A6FA5] mb-2">{relatedProduct.description.slice(0, 50)}...</p>
                     <div className="flex justify-between items-center">
-                      <span className="font-bold text-blue-600">₹{relatedProduct.price.toFixed(2)}</span>
+                      <span className="font-bold text-[#1A2E44]">₹{relatedProduct.price.toFixed(2)}</span>
                       <button
                         onClick={() => navigate(`/product/${relatedProduct.id}`)}
-                        className="text-blue-600 hover:text-blue-800 font-semibold"
+                        className="text-[#E07A5F] hover:text-[#C86D54] font-semibold"
                       >
                         View Product
                       </button>
@@ -291,22 +290,21 @@ const ProductDescription = () => {
         >
           <button 
             onClick={() => handleSocialMediaClick('facebook')}
-            className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition-colors duration-300"
+            className="bg-[#E07A5F] text-white p-3 rounded-full hover:bg-[#C86D54] transition-colors duration-300"
           >
             <Facebook size={24} />
           </button>
           <button 
             onClick={() => handleSocialMediaClick('twitter')}
-            className="bg-blue-400 text-white p-3 rounded-full hover:bg-blue-500 transition-colors duration-300"
+            className="bg-[#E07A5F] text-white p-3 rounded-full hover:bg-[#C86D54] transition-colors duration-300"
           >
             <Twitter size={24} />
           </button>
           <button 
             onClick={() => handleSocialMediaClick('instagram')}
-            className="bg-pink-600 text-white p-3 rounded-full hover:bg-pink-700 transition-colors duration-300"
+            className="bg-[#E07A5F] text-white p-3 rounded-full hover:bg-[#C86D54] transition-colors duration-300"
           >
-
-<Instagram size={24} />
+            <Instagram size={24} />
           </button>
         </motion.div>
       </div>

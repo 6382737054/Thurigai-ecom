@@ -1,507 +1,333 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useAnimation } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { ShoppingBag, Star, Gift, Truck, Smile, ChevronLeft, ChevronRight, Package, RefreshCw, ShieldCheck, CreditCard } from 'lucide-react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import Marquee from 'react-fast-marquee';
-import { Link } from 'react-router-dom'; 
+import React, { useState, useEffect, useRef } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ShoppingCart, Heart, Star, ArrowLeft, Plus, Minus, X, Check, Facebook, Twitter, Instagram } from 'lucide-react';
+import { mockProducts } from './Products'; // Adjust the import path as needed
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-
-const AnimatedSection = ({ children }) => {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+const ProductDescription = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [product, setProduct] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const reviewsRef = useRef(null);
 
   useEffect(() => {
-    if (inView) {
-      controls.start('visible');
+    const fetchedProduct = mockProducts.find(p => p.id === parseInt(id));
+    setProduct(fetchedProduct || null);
+
+    if (fetchedProduct) {
+      const related = mockProducts
+        .filter(p => p.category === fetchedProduct.category && p.id !== fetchedProduct.id)
+        .slice(0, 3);
+      setRelatedProducts(related);
+
+      // Generate mock reviews
+      const mockReviews = [
+        { id: 1, user: "John D.", rating: 5, comment: "Absolutely love this product! It exceeded my expectations in every way.", date: "2024-03-15" },
+        { id: 2, user: "Sarah M.", rating: 4, comment: "Great quality for the price. Would definitely recommend.", date: "2024-03-10" },
+        { id: 3, user: "Michael R.", rating: 3, comment: "Decent product, but could use some improvements in durability.", date: "2024-03-05" },
+        { id: 4, user: "Emily L.", rating: 5, comment: "This is exactly what I was looking for. Perfect fit for my needs!", date: "2024-02-28" },
+        { id: 5, user: "David K.", rating: 4, comment: "Good product overall. Shipping was fast and packaging was secure.", date: "2024-02-20" },
+        { id: 6, user: "Lisa H.", rating: 5, comment: "Outstanding quality and customer service. Will buy again!", date: "2024-02-15" },
+      ];
+      setReviews(mockReviews);
     }
-  }, [controls, inView]);
+  }, [id]);
+
+  useEffect(() => {
+    const scrollReviews = () => {
+      if (reviewsRef.current) {
+        if (reviewsRef.current.scrollLeft >= reviewsRef.current.scrollWidth / 2) {
+          reviewsRef.current.scrollLeft = 0;
+        } else {
+          reviewsRef.current.scrollLeft += 1;
+        }
+      }
+    };
+
+    const intervalId = setInterval(scrollReviews, 50);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  if (!product) {
+    return (
+      <div className="text-center mt-20">
+        <p className="text-xl text-gray-600">Product not found.</p>
+        <button
+          onClick={() => navigate('/products')}
+          className="mt-4 text-blue-600 hover:text-blue-800 font-semibold"
+        >
+          Return to Products
+        </button>
+      </div>
+    );
+  }
+
+  const handleAddToCart = () => {
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const existingItem = cartItems.find(item => item.id === product.id);
+  
+    if (existingItem) {
+      cartItems = cartItems.map(item =>
+        item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+      );
+    } else {
+      cartItems = [...cartItems, { ...product, quantity }];
+    }
+  
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    setSnackbarVisible(true);
+    setTimeout(() => setSnackbarVisible(false), 3000);
+  };
+
+  const handleToggleWishlist = () => {
+    setProduct(prevProduct => ({
+      ...prevProduct,
+      isWishlisted: !prevProduct.isWishlisted
+    }));
+  };
+
+  const handleSocialMediaClick = (platform) => {
+    let url;
+    switch (platform) {
+      case 'facebook':
+        url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+        break;
+      case 'twitter':
+        url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`Check out this awesome product: ${product.name}`)}`;
+        break;
+      case 'instagram':
+        // Instagram doesn't have a direct sharing URL, so we'll just open the profile
+        url = 'https://www.instagram.com/your_instagram_profile';
+        break;
+      default:
+        return;
+    }
+    window.open(url, '_blank');
+  };
 
   return (
-    <motion.div
-      ref={ref}
-      animate={controls}
-      initial="hidden"
-      variants={{
-        visible: { opacity: 1, y: 0 },
-        hidden: { opacity: 0, y: 50 }
-      }}
-      transition={{ duration: 0.5 }}
-    >
-      {children}
-    </motion.div>
+    <div className="bg-gray-50 min-h-screen pt-28 pb-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <motion.button
+          onClick={() => navigate(-1)}
+          className="mb-8 flex items-center text-blue-600 hover:text-blue-800 font-semibold"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <ArrowLeft className="mr-2" /> Back to Products
+        </motion.button>
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="md:flex">
+            <motion.div 
+              className="md:flex-shrink-0 md:w-1/2 p-4"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img className="w-full h-96 object-contain rounded-lg" src={product.image} alt={product.name} />
+            </motion.div>
+            <motion.div 
+              className="p-8 md:w-1/2"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">{product.name}</h2>
+              <div className="flex items-center mb-4">
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className={`h-5 w-5 ${i < Math.floor(product.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} />
+                  ))}
+                </div>
+                <span className="ml-2 text-gray-600">({product.reviews} reviews)</span>
+              </div>
+              <p className="text-gray-600 mb-6">{product.description}</p>
+              <div className="flex items-center justify-between mb-6">
+                <span className="text-3xl font-bold text-gray-800">₹{product.price.toFixed(2)}</span>
+                <span className="text-lg text-gray-600">Category: {product.category}</span>
+              </div>
+              <div className="flex items-center mb-6">
+                <span className="mr-4 text-gray-700">Quantity:</span>
+                <button 
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="bg-gray-200 text-gray-700 rounded-full p-2"
+                >
+                  <Minus size={16} />
+                </button>
+                <span className="mx-4 text-xl font-semibold">{quantity}</span>
+                <button 
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="bg-gray-200 text-gray-700 rounded-full p-2"
+                >
+                  <Plus size={16} />
+                </button>
+              </div>
+              <div className="flex space-x-4 mb-6">
+                <button
+                  className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-full text-lg font-medium hover:bg-blue-700 transition duration-300 flex items-center justify-center"
+                  onClick={handleAddToCart}
+                >
+                  <ShoppingCart className="mr-2 h-5 w-5" />
+                  Add to Cart
+                </button>
+                <button
+                  className="bg-gray-200 text-gray-800 py-3 px-6 rounded-full text-lg font-medium hover:bg-gray-300 transition duration-300 flex items-center justify-center"
+                  onClick={handleToggleWishlist}
+                >
+                  <Heart className={`h-5 w-5 ${product.isWishlisted ? 'text-red-500 fill-red-500' : 'text-gray-600'}`} />
+                </button>
+              </div>
+              {product.features && (
+                <div className="border-t border-gray-200 pt-6">
+                  <h3 className="text-lg font-semibold mb-2">Product Features:</h3>
+                  <ul className="list-disc list-inside text-gray-600">
+                    {product.features.map((feature, index) => (
+                      <li key={index} className="flex items-center mb-2">
+                        <Check size={16} className="mr-2 text-green-500" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        </div>
+
+        <motion.div 
+          className="mt-12"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <h3 className="text-2xl font-bold text-gray-800 mb-6">Customer Reviews</h3>
+          <div 
+            ref={reviewsRef}
+            className="overflow-hidden whitespace-nowrap"
+            style={{ scrollBehavior: 'smooth' }}
+          >
+            <div className="inline-flex space-x-6">
+              {reviews.concat(reviews).map((review, index) => (
+                <motion.div
+                  key={`${review.id}-${index}`}
+                  className="bg-white rounded-lg p-6 w-80 inline-block"
+                  style={{
+                    boxShadow: '0 4px 6px -1px rgba(251, 207, 232, 0.1), 0 2px 4px -1px rgba(251, 207, 232, 0.06)',
+                    transition: 'box-shadow 0.3s ease-in-out'
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  whileHover={{
+                    boxShadow: '0 10px 15px -3px rgba(251, 207, 232, 0.3), 0 4px 6px -2px rgba(251, 207, 232, 0.2)'
+                  }}
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h4 className="text-lg font-semibold text-gray-800">{review.user}</h4>
+                      <p className="text-sm text-gray-500">{review.date}</p>
+                    </div>
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-5 w-5 ${
+                            i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-gray-600 whitespace-normal">{review.comment}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+
+        {relatedProducts.length > 0 && (
+          <motion.div 
+            className="mt-12"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <h3 className="text-2xl font-bold text-gray-800 mb-6">Related Products</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {relatedProducts.map(relatedProduct => (
+                <div key={relatedProduct.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                  <img className="w-full h-48 object-cover" src={relatedProduct.image} alt={relatedProduct.name} />
+                  <div className="p-4">
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">{relatedProduct.name}</h4>
+                    <p className="text-gray-600 mb-2">{relatedProduct.description.slice(0, 50)}...</p>
+                    <div className="flex justify-between items-center">
+                      <span className="font-bold text-blue-600">₹{relatedProduct.price.toFixed(2)}</span>
+                      <button
+                        onClick={() => navigate(`/product/${relatedProduct.id}`)}
+                        className="text-blue-600 hover:text-blue-800 font-semibold"
+                      >
+                        View Product
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        <motion.div 
+          className="mt-12 flex justify-center space-x-4"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
+          <button 
+            onClick={() => handleSocialMediaClick('facebook')}
+            className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition-colors duration-300"
+          >
+            <Facebook size={24} />
+          </button>
+          <button 
+            onClick={() => handleSocialMediaClick('twitter')}
+            className="bg-blue-400 text-white p-3 rounded-full hover:bg-blue-500 transition-colors duration-300"
+          >
+            <Twitter size={24} />
+          </button>
+          <button 
+            onClick={() => handleSocialMediaClick('instagram')}
+            className="bg-pink-600 text-white p-3 rounded-full hover:bg-pink-700 transition-colors duration-300"
+          >
+
+<Instagram size={24} />
+          </button>
+        </motion.div>
+      </div>
+
+      <AnimatePresence>
+        {snackbarVisible && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center"
+          >
+            <span>{`${product.name} added to cart`}</span>
+            <button onClick={() => setSnackbarVisible(false)} className="ml-2">
+              <X size={18} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 
-const Hero = () => {
-  const [activeProduct, setActiveProduct] = useState(0);
-
-  const marqueeItems = [
-    { type: 'image', content: '/Images/marq1.png', alt: 'Diwali Lamp' },
-    { type: 'text', content: 'Exclusive Diwali Offers' },
-    { type: 'image', content: '/Images/marq2.png', alt: 'Rangoli Design' },
-    { type: 'text', content: 'Handcrafted with Love' },
-    { type: 'image', content: '/Images/marq3.png', alt: 'Festive Sweets' },
-    { type: 'text', content: 'Authentic Indian Flavors' },
-    { type: 'image', content: '/Images/marq4.png', alt: 'Diwali Decorations' },
-    { type: 'text', content: 'Transform Your Space' },
-  ];
-  
-  const products = [
-    { name: "Golden Bowl", image: "/Images/Hero1.png", description: "Elegant ceremonial bowl crafted by skilled artisans. Perfect for festive gatherings and special occasions." },
-    { name: "Diwali Lanterns", image: "/Images/Hero2.png", description: "Illuminate your home with these enchanting lanterns. Each piece is a work of art that casts a warm, inviting glow." },
-    { name: "Festive Treats", image: "/Images/Hero3.png", description: "Indulge in a selection of traditional delicacies, handmade with the finest ingredients to tantalize your taste buds." },
-  ];
-
-  const transitionProps = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -20 },
-  };
-
-  const images = [
-    "/Images/caro1.png",
-    "/Images/caro2.png",
-    "/Images/caro3.png",
-    "/Images/caro4.png",
-    "/Images/caro5.png",
-    "/Images/caro6.png",
-    "/Images/caro7.png",
-    "/Images/caro8.png",
-    "/Images/caro9.png",
-    "/Images/caro10.png",
-    "/Images/caro11.png",
-    "/Images/caro12.png",
-    "/Images/caro13.png",
-    "/Images/caro14.png",
-    "/Images/caro15.png",
-  ];
-
-  const [swiper, setSwiper] = useState(null);
-
-  useEffect(() => {
-    const autoplayInterval = setInterval(() => {
-      if (swiper) {
-        swiper.slideNext();
-      }
-    }, 3000);
-
-    return () => clearInterval(autoplayInterval);
-  }, [swiper]);
-
-  const alternatingContent = [
-    {
-      image: "/Images/alt1.png",
-      title: "Exquisite Diwali Decor",
-      description: "Transform your home into a festive wonderland with our carefully curated collection of Diwali decorations. From intricate rangoli designs to sparkling string lights, we have everything you need to create a magical atmosphere that captures the essence of this joyous occasion."
-    },
-    {
-      image: "/Images/alt2.png",
-      title: "Artisanal Diya Collection",
-      description: "Illuminate your space with our handcrafted diyas, each telling a unique story of tradition and craftsmanship. These beautiful oil lamps are not just decorative pieces but also symbols of hope, prosperity, and the triumph of light over darkness."
-    },
-    {
-      image: "/Images/alt3.png",
-      title: "Gourmet Festive Treats",
-      description: "Indulge in the flavors of Diwali with our premium selection of sweets and savories. From traditional favorites like kaju katli and gulab jamun to modern fusion delicacies, our gourmet treats are perfect for gifting or savoring with your loved ones during the festivities."
-    },
-  ];
-
-  const testimonials = [
-    {
-      name: "Priya Sharma",
-      location: "Mumbai",
-      text: "The Diwali decor I ordered was absolutely stunning. It transformed our home and made our celebration extra special!",
-      image: "/Images/Person.png"
-    },
-    {
-      name: "Rahul Mehta",
-      location: "Delhi",
-      text: "Fast delivery and excellent quality products. The artisanal diyas were a hit at our family gathering. Will definitely order again!",
-      image: "/Images/Person.png"
-    },
-    {
-      name: "Anita Kapoor",
-      location: "Bangalore",
-      text: "The festive treats bundle was a delight! Authentic taste and beautiful packaging. It was the perfect gift for my relatives.",
-      image: "/Images/Person.png"
-    }
-  ];
-
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
-
-  const nextTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
-  return (
-    <div className="bg-gradient-to-br from-[#f6e9d7] to-[#efeeec] min-h-screen py-20 px-2 sm:px-4 lg:px-6 pt-44 font-['Montserrat',sans-serif]">
-      <div className="max-w-7xl mx-auto">
-        <AnimatedSection>
-          <motion.div
-            className="text-center mb-12"
-          >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#8b4513] mb-4 font-['Playfair_Display',serif]">
-              Diwali Home Fest
-            </h1>
-            <p className="text-xl text-[#6c4a3d] max-w-2xl mx-auto font-['Open_Sans',sans-serif]">
-              Celebrate with handcrafted essentials that bring the magic of India's festivities into your home.
-            </p>
-          </motion.div>
-        </AnimatedSection>
-  
-        <AnimatedSection>
-          <div className="flex flex-col md:flex-row items-center">
-            <motion.div  
-              className="w-full md:w-1/2 mb-8 md:mb-0"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <div className="relative w-full h-[500px]">
-                <AnimatePresence>
-                  {products.map((product, index) => (
-                    activeProduct === index && (
-                      <motion.img
-                        key={index}
-                        src={product.image}
-                        alt={product.name}
-                        className="absolute top-0 left-0 w-full h-full object-cover rounded-lg shadow-2xl"
-                        {...transitionProps}
-                        transition={{ duration: 0.5 }}
-                      />
-                    )
-                  ))}
-                </AnimatePresence>
-              </div>
-            </motion.div>
-  
-            <motion.div
-  className="w-full md:w-1/2 md:pl-12"
-  initial={{ opacity: 0, x: 50 }}
-  animate={{ opacity: 1, x: 0 }}
-  transition={{ duration: 0.8, delay: 0.4 }}
->
-  <h2 className="text-3xl font-bold text-[#8b4513] mb-6 flex items-center font-['Playfair_Display',serif]">
-    <Star className="mr-2" size={32} color="#FFC107" /> Featured Products
-  </h2>
-  {products.map((product, index) => (
-    <motion.div
-      key={index}
-      className={`mb-4 p-6 w-full md:w-[80%] rounded-lg cursor-pointer transition-all font-['Open_Sans',sans-serif] ${
-        activeProduct === index ? 'bg-[#f0d088] shadow-lg' : 'bg-white shadow-md'
-      }`}
-      whileHover={{ scale: 1.05 }}
-      onClick={() => setActiveProduct(index)}
-    >
-      <h3 className="text-xl font-semibold text-[#4a4a4a] mb-2 font-['Playfair_Display',serif]">{product.name}</h3>
-      <p className="text-[#6c6c6c]">{product.description}</p>
-    </motion.div>
-  ))}
-  <div className="mt-8 flex justify-center">
-    <Link to="/products">
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="bg-[#e77070] text-white py-3 px-6 rounded-full font-semibold hover:bg-[#16464a] transition duration-300 flex items-center font-['Montserrat',sans-serif] ml-1"
-      >
-        <ShoppingBag className="mr-1" size={20} /> Shop Now
-      </motion.button>
-    </Link>
-  </div>
-</motion.div>
-          </div>
-        </AnimatedSection>
-  
-        <AnimatedSection>
-          <motion.div className="mt-24">
-            <Marquee
-              gradient={false}
-              speed={50}
-              pauseOnHover={true}
-              className="bg-gradient-to-r from-[#f0d088] to-[#e5d3ba] py-8 rounded-lg shadow-xl"
-            >
-              {marqueeItems.map((item, index) => (
-                <div key={index} className="mx-8 flex items-center">
-                  {item.type === 'image' ? (
-                    <img src={item.content} alt={item.alt} className="h-24 w-24 object-cover rounded-full border-4 border-white shadow-md" />
-                  ) : (
-                    <h3 className="text-2xl font-bold text-[#8b4513] font-['Playfair_Display',serif]">{item.content}</h3>
-                  )}
-                </div>
-              ))}
-            </Marquee>
-          </motion.div>
-        </AnimatedSection>
-  
-        <AnimatedSection>
-          <motion.div className="mt-24">
-            <h2 className="text-3xl font-bold text-[#FF6B6B] mb-8 text-center font-['Playfair_Display',serif]">Exclusive Diwali Bundles</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#FFD6E3] flex flex-col">
-                <img src="/Images/Bundle1.png" alt="Diwali Bundle 1" className="w-full h-64 object-cover rounded-lg mb-4" />
-                <h3 className="text-xl font-semibold text-[#4A4A4A] mb-2 font-['Playfair_Display',serif]">Delightful Diwali Bundle</h3>
-                <p className="text-[#4A4A4A] mb-4 flex-grow font-['Poppins',sans-serif]">Includes an assortment of lanterns, candles, and decorative items to create a warm and inviting ambiance.</p>
-                <div className="mt-auto">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-[#4ECDC4] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#45B7AA] transition duration-300 font-['Poppins',sans-serif]"
-                  >
-                    <Link to="/products">
-                      <div className="flex items-center">
-                        <Gift className="mr-2 inline-block" size={20} />
-                        Buy Now
-                      </div>
-                    </Link>
-                  </motion.button>
-                </div>
-              </div>
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#FFD6E3] flex flex-col">
-                <img src="/Images/Bundle2.png" alt="Diwali Bundle 2" className="w-full h-64 object-cover rounded-lg mb-4" />
-                <h3 className="text-xl font-semibold text-[#4A4A4A] mb-2 font-['Playfair_Display',serif]">Festive Feast Bundle</h3>
-                <p className="text-[#4A4A4A] mb-4 flex-grow font-['Poppins',sans-serif]">Treat your loved ones to a selection of traditional sweets, savories, and delicacies.</p>
-                <div className="mt-auto">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-[#4ECDC4] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#45B7AA] transition duration-300 font-['Poppins',sans-serif]"
-                  >
-                    <Link to="/products">
-                      <div className="flex items-center">
-                        <Gift className="mr-2 inline-block" size={20} />
-                        Buy Now
-                      </div>
-                    </Link>
-                  </motion.button>
-                </div>
-              </div>
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#FFD6E3] flex flex-col">
-                <img src="/Images/Bundle3.png" alt="Diwali Bundle 3" className="w-full h-64 object-cover rounded-lg mb-4" />
-                <h3 className="text-xl font-semibold text-[#4A4A4A] mb-2 font-['Playfair_Display',serif]">Prosperity Package</h3>
-                <p className="text-[#4A4A4A] mb-4 flex-grow font-['Poppins',sans-serif]">Elevate your celebrations with a curated selection of premium products and festive essentials.</p>
-                <div className="mt-auto">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-[#4ECDC4] text-white py-2 px-6 rounded-full font-semibold hover:bg-[#45B7AA] transition duration-300 font-['Poppins',sans-serif]"
-                  >
-                    <Link to="/products">
-                      <div className="flex items-center">
-                        <Gift className="mr-2 inline-block" size={20} />
-                        Buy Now
-                      </div>
-                    </Link>
-                  </motion.button>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatedSection>
-  
-        <AnimatedSection>
-          <motion.div className="mt-24">
-            <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center font-['Playfair_Display',serif]">Why Choose Us</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#e5d3ba] flex items-center">
-                <Truck className="mr-4 text-[#1e5b5e]" size={48} />
-                <div>
-                  <h3 className="text-xl font-semibold mb-2 font-['Playfair_Display',serif]">Fast and Reliable Shipping</h3>
-                  <p className="text-[#6c6c6c] font-['Open_Sans',sans-serif]">Get your festive essentials delivered right to your doorstep, in time for your celebrations.</p>
-                </div>
-              </div>
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#d4b5bf] flex items-center">
-                <Star className="mr-4 text-[#1e5b5e]" size={48} />
-                <div>
-                  <h3 className="text-xl font-semibold mb-2 font-['Playfair_Display',serif]">Handpicked Products</h3>
-                  <p className="text-[#6c6c6c] font-['Open_Sans',sans-serif]">We curate the finest selection of products to ensure the highest quality and craftsmanship.</p>
-                </div>
-              </div>
-              <div className="bg-white p-6 w-full md:w-[90%] rounded-lg shadow-md shadow-[#c9a89a] flex items-center">
-                <Smile className="mr-4 text-[#1e5b5e]" size={48} />
-                <div>
-                  <h3 className="text-xl font-semibold mb-2 font-['Playfair_Display',serif]">Exceptional Customer Service</h3>
-                  <p className="text-[#6c6c6c] font-['Open_Sans',sans-serif]">Our dedicated team is always ready to assist you and ensure your utmost satisfaction.</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatedSection>
-  
-        <AnimatedSection>
-          <motion.div className="mt-24">
-            <h2 className="text-3xl font-bold text-[#8b4513] mb-8 text-center font-['Playfair_Display',serif]">Featured Products Gallery</h2>
-            <Swiper
-              onSwiper={setSwiper}
-              slidesPerView={4}
-              spaceBetween={10}
-              loop={true}
-              breakpoints={{
-                320: {
-                  slidesPerView: 1,
-                  spaceBetween: 10,
-                },
-                640: {
-                  slidesPerView: 2,
-                  spaceBetween: 20,
-                },
-                768: {
-                  slidesPerView: 3,
-                  spaceBetween: 30,
-                },
-                1024: {
-                  slidesPerView: 4,
-                  spaceBetween: 40,
-                },
-              }}
-            >
-              {images.map((image, index) => (
-                <SwiperSlide key={index}>
-                  <div className="bg-white p-4 w-full md:w-[90%] rounded-lg shadow-md">
-                    <img src={image} alt={`Slide ${index + 1}`} className="w-full h-72 object-cover rounded-lg mb-4" />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </motion.div>
-        </AnimatedSection>
-  
-        <AnimatedSection>
-          <motion.div className="mt-24">
-            <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center font-['Playfair_Display',serif]">Discover Our Diwali Specials</h2>
-            {alternatingContent.map((content, index) => (
-              <motion.div
-                key={index}
-                className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center mb-24`}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 * index }}
-              >
-                <motion.div
-                  className="w-full md:w-1/2 mb-8 md:mb-0"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
-                >
-
-<img src={content.image} alt={content.title} className="w-full h-[400px] object-cover rounded-lg shadow-2xl" />
-              </motion.div>
-              <motion.div
-                className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pl-12' : 'md:pr-12'}`}
-                initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 + 0.2 * index }}
-              >
-                <motion.h3 
-                  className="text-2xl font-bold text-[#8b4513] mb-4 font-['Playfair_Display',serif]"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {content.title}
-                </motion.h3>
-                <motion.p 
-                  className="text-[#6c4a3d] text-lg leading-relaxed mb-6 font-['Open_Sans',sans-serif]"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {content.description}
-                </motion.p>
-              </motion.div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </AnimatedSection>
-
-      <AnimatedSection>
-        <motion.div className="mt-24">
-          <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center font-['Playfair_Display',serif]">What Our Customers Say</h2>
-          <div className="relative">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentTestimonial}
-                className="bg-white rounded-lg shadow-xl p-6 flex flex-col items-center max-w-2xl mx-auto"
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.5 }}
-              >
-                <img
-                  src={testimonials[currentTestimonial].image}
-                  alt={testimonials[currentTestimonial].name}
-                  className="w-20 h-20 rounded-full object-cover border-4 border-[#f0d088] shadow-md mb-4"
-                />
-                <p className="text-[#4a4a4a] text-lg italic mb-4 text-center font-['Open_Sans',sans-serif]">"{testimonials[currentTestimonial].text}"</p>
-                <div className="mt-auto">
-                  <p className="font-semibold text-[#1e5b5e] text-center font-['Playfair_Display',serif]">{testimonials[currentTestimonial].name}</p>
-                  <p className="text-[#6c4a3d] text-sm text-center font-['Open_Sans',sans-serif]">{testimonials[currentTestimonial].location}</p>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-            
-            <div className="flex justify-center mt-8">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentTestimonial(index)}
-                  className={`w-3 h-3 rounded-full mx-1 focus:outline-none transition-colors duration-300 ${
-                    currentTestimonial === index ? 'bg-[#8b4513]' : 'bg-[#e5d3ba]'
-                  }`}
-                  aria-label={`View testimonial ${index + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      </AnimatedSection>
-
-      <AnimatedSection>
-        <motion.div className="mt-24">
-          <h2 className="text-3xl font-bold text-[#8b4513] mb-12 text-center font-['Playfair_Display',serif]">Key Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-[#f0d088] rounded-full p-4 mb-4">
-                <Package className="h-10 w-10 text-[#b8860b]" />
-              </div>
-              <h3 className="text-xl font-semibold text-[#8b4513] mb-2 font-['Playfair_Display',serif]">Free delivery across India</h3>
-              <p className="text-[#6c4a3d] font-['Open_Sans',sans-serif]">Enjoy free delivery on orders over ₹999 within India and $59 internationally. We guarantee fast delivery.</p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-[#f0d088] rounded-full p-4 mb-4">
-                <RefreshCw className="h-10 w-10 text-[#b8860b]" />
-              </div>
-              <h3 className="text-xl font-semibold text-[#8b4513] mb-2 font-['Playfair_Display',serif]">Easy replacement</h3>
-
-              <p className="text-[#6c4a3d] font-['Open_Sans',sans-serif]">If you receive a damaged product, we'll gladly take it back! Enjoy a hassle-free shopping experience.</p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-[#f0d088] rounded-full p-4 mb-4">
-                <ShieldCheck className="h-10 w-10 text-[#b8860b]" />
-              </div>
-              <h3 className="text-xl font-semibold text-[#8b4513] mb-2 font-['Playfair_Display',serif]">100% Authentic</h3>
-              <p className="text-[#6c4a3d] font-['Open_Sans',sans-serif]">Shop with peace of mind knowing that all our products are 100% authentic.</p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-[#f0d088] rounded-full p-4 mb-4">
-                <CreditCard className="h-10 w-10 text-[#b8860b]" />
-              </div>
-              <h3 className="text-xl font-semibold text-[#8b4513] mb-2 font-['Playfair_Display',serif]">Secure payments</h3>
-              <p className="text-[#6c4a3d] font-['Open_Sans',sans-serif]">Our website offers a 100% secure payment gateway, ensuring a completely safe shopping experience for you.</p>
-            </div>
-          </div>
-        </motion.div>
-      </AnimatedSection>
-    </div>
-  </div>
-);
-};
-
-export default Hero;
+export default ProductDescription;
