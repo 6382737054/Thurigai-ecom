@@ -88,7 +88,7 @@ const NavBar = () => {
       </div>
 
       {/* Navigation */}
-      <nav className="hidden md:block bg-[#f7a76a] w-full">
+      <nav className="hidden md:block bg-[#FFDD88] w-full">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-center py-4 space-x-8">
             {menuItems.map((item) => (

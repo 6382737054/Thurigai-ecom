@@ -8,8 +8,9 @@ import Footer from './Components/Footer';
 import CartPage from './Pages/CartPage';
 import WhatsAppButton from './Components/WhatsappButton';
 import PhoneButton from './Components/PhoneButton';
-import ProductDescription from './Pages/ProductDescription'; // Import the new component
+import ProductDescription from './Pages/ProductDescription';
 import Gallery from './Pages/Gallery';
+import UserColumns from './Pages/UserColumns'; // Import the new UserColumns component
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -30,10 +31,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Hero />} />
             <Route path="/products" element={<ProductsSection />} />
-            <Route path="/product/:id" element={<ProductDescription />} /> {/* New route for product description */}
+            <Route path="/product/:id" element={<ProductDescription />} />
             <Route path="/about-us" element={<AboutUsSection />} />
             <Route path="/cart" element={<CartPage/>} />
             <Route path="/gallery" element={<Gallery/>}/>
+            <Route path="/user-columns" element={<UserColumns />} /> {/* New route for UserColumns */}
           </Routes>
         </main>
         <Footer className="mt-auto" />
