@@ -16,7 +16,7 @@ export const fetchUserColumns = async () => {
       { Field: 'email', Type: 'VARCHAR(45)', Null: 'NO', Key: '', Default: null, Extra: '' }
     ];
     const userData = response.data;
-
+console.log(userData)
     return { tableStructure, userData };
   } catch (error) {
     console.error('Error in API call:', error);

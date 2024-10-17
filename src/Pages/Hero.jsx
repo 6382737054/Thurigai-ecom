@@ -118,7 +118,7 @@ const Hero = () => {
   }, [swiper]);
 
   return (
-    <div className="bg-[#F5E6D3] min-h-screen py-12 px-4 sm:px-6 lg:px-8 pt-40  font-['Poppins',sans-serif]">
+    <div className="bg-[#F5E6D3] min-h-screen py-12 px-4 sm:px-6 lg:px-8 pt-40 font-['Poppins',sans-serif] overflow-x-hidden">
       <div className="max-w-7xl mx-auto">
         <AnimatedSection>
           <motion.div className="text-center mb-12">
@@ -220,7 +220,7 @@ const Hero = () => {
         <AnimatedSection>
           <motion.div className="mt-16 sm:mt-24">
             <h2 className="text-2xl sm:text-3xl font-bold text-[#0A1930] mb-8 text-center font-['Playfair_Display',serif]">Exclusive Diwali Bundles</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {[1, 2, 3].map((bundle) => (
                 <div key={bundle} className="bg-white p-6 rounded-lg shadow-md shadow-[#FFD6E3] flex flex-col">
                   <img src={`/Images/Bundle${bundle}.png`} alt={`Diwali Bundle ${bundle}`} className="w-full aspect-square object-cover rounded-lg mb-4" />
@@ -255,9 +255,10 @@ const Hero = () => {
         <AnimatedSection>
           <motion.div className="mt-16 sm:mt-24">
             <h2 className="text-2xl sm:text-3xl font-bold text-[#0A1930] mb-8 text-center font-['Playfair_Display',serif]">Why Choose Us</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {[
                 { icon: Truck, title: "Fast and Reliable Shipping", description: "Get your festive essentials delivered right to your doorstep, in time for your celebrations." },
+
                 { icon: Star, title: "Handpicked Products", description: "We curate the finest selection of products to ensure the highest quality and craftsmanship." },
                 { icon: Smile, title: "Exceptional Customer Service", description: "Our dedicated team is always ready to assist you and ensure your utmost satisfaction." }
               ].map((item, index) => (
@@ -284,17 +285,18 @@ const Hero = () => {
               breakpoints={{
                 640: {
                   slidesPerView: 2,
-                  spaceBetween: 20,
+                  spaceBetween: 15,
                 },
                 768: {
                   slidesPerView: 3,
-                  spaceBetween: 30,
+                  spaceBetween: 20,
                 },
                 1024: {
                   slidesPerView: 4,
-                  spaceBetween: 40,
+                  spaceBetween: 25,
                 },
               }}
+              className="w-full"
             >
               {images.map((image, index) => (
                 <SwiperSlide key={index}>
@@ -313,20 +315,20 @@ const Hero = () => {
             {alternatingContent.map((content, index) => (
               <motion.div
                 key={index}
-                className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center mb-16 sm:mb-24`}
+                className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center mb-12 sm:mb-16 lg:mb-24`}
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 * index }}
               >
                 <motion.div
-                  className="w-full lg:w-1/2 mb-8 lg:mb-0"
+                  className="w-full lg:w-1/2 mb-6 lg:mb-0"
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <img src={content.image} alt={content.title} className="w-full aspect-square object-cover rounded-lg shadow-2xl" />
+                  <img src={content.image} alt={content.title} className="w-full h-auto object-cover rounded-lg shadow-2xl" />
                 </motion.div>
                 <motion.div
-                  className={`w-full lg:w-1/2 ${index % 2 === 0 ? 'lg:pl-12' : 'lg:pr-12'}`}
+                  className={`w-full lg:w-1/2 ${index % 2 === 0 ? 'lg:pl-8' : 'lg:pr-8'}`}
                   initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: 0.4 + 0.2 * index }}
@@ -396,7 +398,7 @@ const Hero = () => {
         <AnimatedSection>
           <motion.div className="mt-16 sm:mt-24">
             <h2 className="text-2xl sm:text-3xl font-bold text-[#0A1930] mb-12 text-center font-['Playfair_Display',serif]">Key Features</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
               {[
                 { icon: Package, title: "Free delivery across India", description: "Enjoy free delivery on orders over ₹999 within India and $59 internationally. We guarantee fast delivery." },
                 { icon: RefreshCw, title: "Easy replacement", description: "If you receive a damaged product, we'll gladly take it back! Enjoy a hassle-free shopping experience." },
