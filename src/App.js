@@ -11,6 +11,7 @@ import PhoneButton from './Components/PhoneButton';
 import ProductDescription from './Pages/ProductDescription';
 import Gallery from './Pages/Gallery';
 import UserColumns from './Pages/UserColumns'; // Import the new UserColumns component
+import GiftingPage from './Pages/GiftPage';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -36,6 +37,8 @@ function App() {
             <Route path="/cart" element={<CartPage/>} />
             <Route path="/gallery" element={<Gallery/>}/>
             <Route path="/user-columns" element={<UserColumns />} /> {/* New route for UserColumns */}
+            <Route path="/gifting" element={<GiftingPage/>}/>
+
           </Routes>
         </main>
         <Footer className="mt-auto" />
