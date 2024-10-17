@@ -13,6 +13,7 @@ const ProductDescription = () => {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [reviews, setReviews] = useState([]);
   const reviewsRef = useRef(null);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const fetchedProduct = mockProducts.find(p => p.id === parseInt(id));
@@ -34,6 +35,10 @@ const ProductDescription = () => {
         { id: 6, user: "Lisa H.", rating: 5, comment: "Outstanding quality and customer service. Will buy again!", date: "2024-02-15" },
       ];
       setReviews(mockReviews);
+
+      // Retrieve cart items from localStorage
+      const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      setCartItems(storedCartItems);
     }
   }, [id]);
 
@@ -68,18 +73,17 @@ const ProductDescription = () => {
   }
 
   const handleAddToCart = () => {
-    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    const existingItem = cartItems.find(item => item.id === product.id);
-  
+    const updatedCartItems = [...cartItems];
+    const existingItem = updatedCartItems.find(item => item.id === product.id);
+
     if (existingItem) {
-      cartItems = cartItems.map(item =>
-        item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
-      );
+      existingItem.quantity += quantity;
     } else {
-      cartItems = [...cartItems, { ...product, quantity }];
+      updatedCartItems.push({ ...product, quantity });
     }
-  
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+    setCartItems(updatedCartItems);
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     setSnackbarVisible(true);
     setTimeout(() => setSnackbarVisible(false), 3000);
   };
@@ -282,50 +286,50 @@ const ProductDescription = () => {
           </motion.div>
         )}
 
-        <motion.div 
-          className="mt-12 flex justify-center space-x-4"
+<motion.div 
+      className="mt-12 flex justify-center space-x-4"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.6 }}
+    >
+      <button 
+        onClick={() => handleSocialMediaClick('facebook')}
+        className="bg-[#E07A5F] text-white p-3 rounded-full hover:bg-[#C86D54] transition-colors duration-300"
+      >
+        <Facebook size={24} />
+      </button>
+      <button 
+        onClick={() => handleSocialMediaClick('twitter')}
+        className="bg-[#E07A5F] text-white p-3 rounded-full hover:bg-[#C86D54] transition-colors duration-300"
+      >
+        <Twitter size={24} />
+      </button>
+      <button 
+        onClick={() => handleSocialMediaClick('instagram')}
+        className="bg-[#E07A5F] text-white p-3 rounded-full hover:bg-[#C86D54] transition-colors duration-300"
+      >
+        <Instagram size={24} />
+      </button>
+    </motion.div>
+
+    <AnimatePresence>
+      {snackbarVisible && (
+        <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
+          exit={{ opacity: 0, y: 50 }}
+          className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center"
         >
-          <button 
-            onClick={() => handleSocialMediaClick('facebook')}
-            className="bg-[#E07A5F] text-white p-3 rounded-full hover:bg-[#C86D54] transition-colors duration-300"
-          >
-            <Facebook size={24} />
-          </button>
-          <button 
-            onClick={() => handleSocialMediaClick('twitter')}
-            className="bg-[#E07A5F] text-white p-3 rounded-full hover:bg-[#C86D54] transition-colors duration-300"
-          >
-            <Twitter size={24} />
-          </button>
-          <button 
-            onClick={() => handleSocialMediaClick('instagram')}
-            className="bg-[#E07A5F] text-white p-3 rounded-full hover:bg-[#C86D54] transition-colors duration-300"
-          >
-            <Instagram size={24} />
+          <span>{`${product.name} added to cart`}</span>
+          <button onClick={() => setSnackbarVisible(false)} className="ml-2">
+            <X size={18} />
           </button>
         </motion.div>
-      </div>
+      )}
+    </AnimatePresence>
+  </div>
+</div>
 
-      <AnimatePresence>
-        {snackbarVisible && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center"
-          >
-            <span>{`${product.name} added to cart`}</span>
-            <button onClick={() => setSnackbarVisible(false)} className="ml-2">
-              <X size={18} />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
+);
 };
-
 export default ProductDescription;
