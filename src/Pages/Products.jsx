@@ -150,6 +150,9 @@ const ProductsSection = () => {
     }
   
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    
+    // Dispatch the custom event to update the cart count in real-time
+    window.dispatchEvent(new Event('cartUpdated'));
   };
 
   const handleToggleWishlist = (productId) => {
@@ -219,6 +222,7 @@ const ProductsSection = () => {
               </select>
             </div>
           </div>
+
           {showFilters && (
             <motion.div 
               className="mt-4 flex flex-wrap gap-4"

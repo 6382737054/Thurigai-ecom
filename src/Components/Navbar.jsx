@@ -1,20 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShoppingBagIcon, UserIcon, HeartIcon, MagnifyingGlassIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { Link, useLocation } from 'react-router-dom';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [cartItemCount, setCartItemCount] = useState(0);
   const location = useLocation();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const menuItems = ['Home', 'Products', 'About Us', 'Gifting', 'Gallery',];
+  const menuItems = ['Home', 'Products', 'About Us', 'Gifting', 'Gallery'];
 
   const isActive = (path) => {
     return location.pathname === path;
   };
+
+  useEffect(() => {
+    const updateCartItemCount = () => {
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const totalCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+      setCartItemCount(totalCount);
+    };
+
+    // Initial cart count update
+    updateCartItemCount();
+
+    // Listen for custom 'cartUpdated' event
+    const handleCartUpdate = () => {
+      updateCartItemCount();
+    };
+
+    window.addEventListener('cartUpdated', handleCartUpdate);
+
+    return () => {
+      window.removeEventListener('cartUpdated', handleCartUpdate);
+    };
+  }, []);
 
   return (
     <header className="bg-white shadow-sm fixed top-0 left-0 w-full z-50">
@@ -51,6 +74,11 @@ const NavBar = () => {
               className="text-teal-500 hover:text-teal-700 relative ml-4 hover:underline"
             >
               <ShoppingBagIcon className="w-6 h-6" />
+              {cartItemCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {cartItemCount}
+                </span>
+              )}
             </Link>
           </div>
           <button className="md:hidden text-brown-500 hover:text-brown-700" onClick={toggleMenu}>
@@ -113,6 +141,11 @@ const NavBar = () => {
               className="text-teal-500 hover:text-teal-700 relative ml-4 hover:underline"
             >
               <ShoppingBagIcon className="w-6 h-6" />
+              {cartItemCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {cartItemCount}
+                </span>
+              )}
             </Link>
           </div>
         </nav>
