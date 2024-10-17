@@ -50,7 +50,7 @@ const GiftDescription = () => {
 
   if (!gift) {
     return (
-      <div className="text-center mt-20">
+      <div className="text-center ">
         <p className="text-xl text-[#4A6FA5]">Gift not found.</p>
         <button
           onClick={() => navigate('/gifts')}
@@ -89,17 +89,17 @@ const GiftDescription = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen pt-28 pb-12 px-4 sm:px-6 lg:px-8">
+    <div className="bg-gray-50 min-h-screen pt-28 pb-12 px-4 sm:px-6 lg:px-8 pt-36">
       <div className="max-w-7xl mx-auto">
-        <motion.button
-          onClick={() => navigate('/gifts')}
-          className="mb-8 flex items-center text-[#E07A5F] hover:text-[#C86D54] font-semibold"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <ArrowLeft className="mr-2" /> Back to Gifts
-        </motion.button>
+      <motion.button
+      onClick={() => navigate('/gifting')}
+      className="mb-8 flex items-center text-[#E07A5F] hover:text-[#C86D54] font-semibold"
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <ArrowLeft className="mr-2" /> Back to Gifts
+    </motion.button>
 
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="md:flex">
